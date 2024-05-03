@@ -1,26 +1,16 @@
 class Solution {
 public:
     int findMaxK(vector<int>& nums) {
-        sort(nums.begin(),nums.end());
+        unordered_set<int>s(nums.begin(),nums.end());
+        int pair=-1;
 
-        int ans=0;
-        int i=0,j=nums.size()-1;
-        while(i<=j)
+        for(auto it:nums)
         {
-            int sum=nums[i]+nums[j];
-            if(sum==0)
+            if(it>0 && s.count(-it))
             {
-                return nums[j];
-            }
-            else if(sum>0)
-            {
-                j--;
-            }
-            else
-            {
-                i++;
+                pair=max(pair,it);
             }
         }
-        return -1;
+        return pair;
     }
 };
