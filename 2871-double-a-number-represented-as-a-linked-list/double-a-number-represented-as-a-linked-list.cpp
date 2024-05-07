@@ -11,30 +11,33 @@
 class Solution {
 public:
     ListNode* doubleIt(ListNode* head) {
-        stack<int>s;
-        int val=0;
+        ListNode* prev=NULL;
+        ListNode* curr=head;
 
-        while(head!=NULL)
+        while(curr)
         {
-            s.push(head->val);
-            head=head->next;
-        }
+            int val=2*curr->val;
 
-        ListNode* newHead=NULL;
-
-        while(!s.empty() || val!=0)
-        {
-            newHead=new ListNode(0,newHead);
-            if(!s.empty())
+            if(val<10)
             {
-                val+=s.top()*2;
-                s.pop();
+                curr->val=val;
             }
-            newHead->val=val%10;
-            val=val/10;
+
+            else if(prev!=NULL)
+            {
+                curr->val=val%10;
+                prev->val=prev->val+1;
+            }
+
+            else
+            {
+                //first node we need to create a new node
+                head=new ListNode(1,curr);
+                curr->val=val%10;
+            }
+            prev=curr;
+            curr=curr->next;
         }
-        return newHead;
-
-
+        return head;
     }
 };
