@@ -10,23 +10,31 @@
  */
 class Solution {
 public:
-    int solve(ListNode* head)
-    {
-        if(head==NULL)
-        {
-            return 0;
-        }
-        int doubleit=head->val*2+solve(head->next);
-        head->val=doubleit%10;
-        return doubleit/10;
-    }
     ListNode* doubleIt(ListNode* head) {
-        int carry=solve(head);
+        stack<int>s;
+        int val=0;
 
-        if(carry)
+        while(head!=NULL)
         {
-            head=new ListNode(carry,head);
+            s.push(head->val);
+            head=head->next;
         }
-        return head;
+
+        ListNode* newHead=NULL;
+
+        while(!s.empty() || val!=0)
+        {
+            newHead=new ListNode(0,newHead);
+            if(!s.empty())
+            {
+                val+=s.top()*2;
+                s.pop();
+            }
+            newHead->val=val%10;
+            val=val/10;
+        }
+        return newHead;
+
+
     }
 };
