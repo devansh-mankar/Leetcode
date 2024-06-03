@@ -10,7 +10,7 @@ public:
             {
                 count++;
             }
-            while(count>k)
+            if(count>k)
             {
                 if(nums[left]==0)
                 {
