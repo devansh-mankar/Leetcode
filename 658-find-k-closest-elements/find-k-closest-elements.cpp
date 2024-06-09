@@ -7,7 +7,7 @@ public:
         for(int i=0;i<arr.size();i++)
         {
             pq.push({abs(arr[i]-x),arr[i]});
-            while(pq.size()>k)
+            if(pq.size()>k)
             {
                 pq.pop();
             }
