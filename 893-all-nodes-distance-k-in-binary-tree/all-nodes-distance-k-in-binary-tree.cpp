@@ -42,13 +42,14 @@ public:
         findParent(root,nodeToParent);
 
         unordered_map<TreeNode*,int>vis;
-        vis[target]=true;
         queue<TreeNode*>q;
         q.push(target);
+        vis[target]=true;
 
         while(k--)
         {
             int size=q.size();
+
             while(size--)
             {
                 TreeNode* temp=q.front();
@@ -56,20 +57,19 @@ public:
 
                 if(temp->left && !vis[temp->left])
                 {
-                    vis[temp->left]=true;
                     q.push(temp->left);
+                    vis[temp->left]=true;
                 }
                 if(temp->right && !vis[temp->right])
                 {
-                    vis[temp->right]=true;
                     q.push(temp->right);
+                    vis[temp->right]=true;
                 }
-                if(!vis[nodeToParent[temp]] && nodeToParent[temp])
+                if(nodeToParent[temp] && !vis[nodeToParent[temp]])
                 {
-                    vis[nodeToParent[temp]]=true;
                     q.push(nodeToParent[temp]);
+                    vis[nodeToParent[temp]]=true;
                 }
-                
             }
         }
 
