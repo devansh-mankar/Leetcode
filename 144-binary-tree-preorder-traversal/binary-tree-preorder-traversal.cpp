@@ -13,26 +13,36 @@ class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int>ans;
-        stack<TreeNode*>s;
         if(root==NULL)
         {
             return ans;
         }
-
-        s.push(root);
-        while(!s.empty())
+        TreeNode* curr=root;
+        while(curr)
         {
-            TreeNode* node=s.top();
-            s.pop();
-            ans.push_back(node->val);
-
-            if(node->right)
+            if(!curr->left)
             {
-                s.push(node->right);
+                ans.push_back(curr->val);
+                curr=curr->right;
             }
-            if(node->left)
+            else
             {
-                s.push(node->left);
+                TreeNode* pred=curr->left;
+                while(pred->right && pred->right!=curr)
+                {
+                    pred=pred->right;
+                }
+                if(!pred->right)
+                {
+                    pred->right=curr;
+                    ans.push_back(curr->val);
+                    curr=curr->left;
+                }
+                else
+                {
+                    pred->right=NULL;
+                    curr=curr->right;
+                }
             }
         }
         return ans;
