@@ -1,29 +1,5 @@
 class Solution {
 public:
-    bool dfs(int node,vector<int>&vis,vector<int>adj[],stack<int>&s,vector<int>&dfsCall)
-    {
-        vis[node]=true;
-        dfsCall[node]=true;
-
-        for(auto it:adj[node])
-        {
-            if(!vis[it])
-            {
-                if(dfs(it,vis,adj,s,dfsCall))
-                {
-                    return true;
-                }
-                
-            }
-            else if(dfsCall[it])
-            {
-                return false;
-            }
-        }
-        s.push(node);
-        dfsCall[node]=false;
-        return false;
-    }
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         vector<int>adj[numCourses];
 
@@ -35,24 +11,42 @@ public:
             adj[v].push_back(u);
         }
 
-        vector<int>vis(numCourses,0);
-          vector<int>dfsCall(numCourses,0);
-        stack<int>s;
+        vector<int>indegree(numCourses,0);
 
         for(int i=0;i<numCourses;i++)
         {
-            if(!vis[i])
+            for(auto it:adj[i])
             {
-                dfs(i,vis,adj,s,dfsCall);
+                indegree[it]++;
+            }
+        }
+
+        queue<int>q;
+        for(int i=0;i<numCourses;i++)
+        {
+            if(indegree[i]==0)
+            {
+                q.push(i);
             }
         }
 
         vector<int>ans;
-        while(!s.empty())
+        while(!q.empty())
         {
-            ans.push_back(s.top());
-            s.pop();
+            int front=q.front();
+            q.pop();
+
+            ans.push_back(front);
+            for(auto it:adj[front])
+            {
+                indegree[it]--;
+                if(indegree[it]==0)
+                {
+                    q.push(it);
+                }
+            }
         }
+
         if(ans.size()==numCourses)
         {
             return ans;
