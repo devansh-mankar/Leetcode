@@ -1,55 +1,51 @@
 class Solution {
 public:
-    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        int n=graph.size();
-        vector<int>adj[n];
+    bool dfs(int node,vector<int>&vis,vector<int>&dfsCall,vector<vector<int>>&graph,vector<int>&check)
+    {
+        dfsCall[node]=true;
+        vis[node]=true;
 
-        for(int i=0;i<n;i++)
+        for(auto it:graph[node])
         {
-          for(auto &j:graph[i])
-          {
-            adj[j].push_back(i);
-          }
-
-            
-        }
-
-        vector<int>indegree(n,0);
-        for(int i=0;i<n;i++)
-        {
-            for(auto it:adj[i])
+            if(!vis[it])
             {
-                indegree[it]++;
-            }
-        }
-
-        queue<int>q;
-        for(int i=0;i<n;i++)
-        {
-            if(indegree[i]==0)
-            {
-                q.push(i);
-            }
-        }
-
-        vector<int>ans;
-        while(!q.empty())
-        {
-            int front=q.front();
-            q.pop();
-            ans.push_back(front);
-
-            for(auto it:adj[front])
-            {
-                indegree[it]--;
-                if(indegree[it]==0)
+                if(dfs(it,vis,dfsCall,graph,check))
                 {
-                    q.push(it);
+                    return true;
                 }
             }
+            else if(dfsCall[it])
+            {
+                return true;
+            }
+        }
+        check[node]=true;
+        dfsCall[node]=false;
+        return false;
+    }
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n=graph.size();
+
+        vector<int>ans;
+        vector<int>vis(n,0);
+        vector<int>dfsCall(n,0);
+        vector<int>check(n,0);
+
+        for(int i=0;i<n;i++)
+        {
+            if(!vis[i])
+            {
+                dfs(i,vis,dfsCall,graph,check);
+            }
         }
 
-        sort(ans.begin(),ans.end());
+        for(int i=0;i<n;i++)
+        {
+            if(check[i]==1)
+            {
+                ans.push_back(i);
+            }
+        }
         return ans;
     }
 };
