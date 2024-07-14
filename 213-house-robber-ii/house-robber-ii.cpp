@@ -1,33 +1,32 @@
 class Solution {
 public:
-    int solve(int index,vector<int>&dp,vector<int>&nums)
+    int solve(vector<int>&nums)
     {
-        if(index==0)
-        {
-            return nums[0];
-        }
-        if(index<0)
-        {
-            return 0;
-        }
-        if(dp[index]!=-1)
-        {
-            return dp[index];
-        }
-        int pick=nums[index]+solve(index-2,dp,nums);
-        int notpick=solve(index-1,dp,nums);
+        int n=nums.size();
+        vector<int>dp(n,0);
+        dp[0]=nums[0];
 
-        return dp[index]=max(pick,notpick);
+        for(int i=1;i<n;i++)
+        {
+            int pick=nums[i];
+            if(i>1)
+            {
+                pick+=dp[i-2];
+            }
+            int notpick=dp[i-1];
+
+            dp[i]=max(pick,notpick);
+        }
+        return dp[n-1];
     }
     int rob(vector<int>& nums) {
-        int n= nums.size();
-
+        int n=nums.size();
+        vector<int>a;
+        vector<int>b;
         if(n==1)
         {
             return nums[0];
         }
-        vector<int>a;
-        vector<int>b;
 
         for(int i=0;i<n;i++)
         {
@@ -41,13 +40,9 @@ public:
             }
         }
 
-        vector<int>dp1(n-1,-1);
-        vector<int>dp2(n-1,-1);
-
-        int type1=solve(n-2,dp1,a);
-        int type2=solve(n-2,dp2,b);
+        int type1=solve(a);
+        int type2=solve(b);
 
         return max(type1,type2);
-
     }
 };
