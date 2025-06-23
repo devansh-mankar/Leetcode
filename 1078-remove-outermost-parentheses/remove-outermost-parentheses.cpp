@@ -1,29 +1,24 @@
 class Solution {
 public:
     string removeOuterParentheses(string s) {
-        stack<int>st;
+        int depth=0;
         string ans="";
 
         for(auto it:s)
         {
             if(it=='(')
             {
-                if(!st.empty())
-                {
-                    //it means we are not at outermost
-                    ans+=it;
-                }
-                st.push(it);
+                depth++;
             }
-            else{
-                st.pop();
-                if(!st.empty())
-                {
-                    ans+=it;
-                }
+            if(depth!=1)
+            {
+                ans+=it;
+            }
+            if(it==')')
+            {
+                depth--;
             }
         }
         return ans;
-
     }
 };
