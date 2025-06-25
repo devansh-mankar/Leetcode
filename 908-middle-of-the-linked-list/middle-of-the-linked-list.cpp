@@ -15,28 +15,14 @@ public:
         {
             return head;
         }
-        ListNode* temp=head;
-        int count=1;
-        while(temp)
+        ListNode* slow=head;
+        ListNode* fast=head;
+
+        while(fast && fast->next)
         {
-            count++;
-            temp=temp->next;
+            slow=slow->next;
+            fast=fast->next->next;
         }
-        int mid=0;
-        if(count%2)
-        {
-            mid=(count/2)+1;
-        }
-        else{
-            mid=count/2;
-        }
-        temp=head;
-        for(int i=1;i<mid;i++)
-        {
-            temp=temp->next;
-        }
-        //temp=temp->next;
-        return temp;
-        
+        return slow;
     }
 };
