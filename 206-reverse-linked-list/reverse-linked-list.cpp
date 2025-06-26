@@ -15,9 +15,9 @@ public:
         {
             return head;
         }
-        ListNode* newhead=reverseList(head->next);
+        ListNode* newHead=reverseList(head->next);
         head->next->next=head;
         head->next=NULL;
-        return newhead;
+        return newHead;
     }
 };
