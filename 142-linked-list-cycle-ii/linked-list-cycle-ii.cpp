@@ -9,27 +9,24 @@
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        ListNode* slow=head;
-        ListNode* fast=head;
+        ListNode* temp=head;
+        map<ListNode*,int>vis;
 
-        while(fast!=NULL && fast->next!=NULL)
+        while(temp)
         {
-            fast=fast->next->next;
-            slow=slow->next;
+            vis[temp]++;
+            temp=temp->next;
 
-            if(slow==fast)
+             for(auto it:vis)
+             {
+            if(it.second==2)
             {
-                fast=head;
-                while(slow!=fast)
-                {
-                    slow=slow->next;
-                    fast=fast->next;
-                }
-            return slow;
+                return it.first;
             }
-            
-            
+             }
         }
+
+       
         return NULL;
     }
 };
