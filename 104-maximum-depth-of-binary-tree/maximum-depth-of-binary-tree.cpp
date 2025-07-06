@@ -16,23 +16,29 @@ public:
         {
             return 0;
         }
-        stack<pair<TreeNode*,int>>s;
-        s.push({root,1});
-        int maxi=0;
-        while(!s.empty())
+        queue<TreeNode*>q;
+        q.push(root);
+        int d=0;
+        while(!q.empty())
         {
-            auto it=s.top();
-            s.pop();
-            maxi=max(maxi,it.second);
-            if(it.first->left)
+            d++;
+            int n=q.size();
+            while(n--)
             {
-                s.push({it.first->left,it.second+1});
+                auto it=q.front();
+                q.pop();
+
+                if(it->left)
+                {
+                    q.push(it->left);
+                }
+                if(it->right)
+                {
+                    q.push(it->right);
+                }
             }
-            if(it.first->right)
-            {
-                s.push({it.first->right,it.second+1});
-            }
+
         }
-        return maxi;
+        return d;
     }
 };
