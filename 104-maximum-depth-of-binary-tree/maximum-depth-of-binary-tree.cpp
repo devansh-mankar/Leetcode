@@ -11,17 +11,31 @@
  */
 class Solution {
 public:
-    int solve(TreeNode* root)
-    {
+    int maxDepth(TreeNode* root) {
         if(root==NULL)
         {
             return 0;
         }
-        int left=1+solve(root->left);
-        int right=1+solve(root->right);
-        return max(left,right);
-    }
-    int maxDepth(TreeNode* root) {
-        return solve(root);
+        stack<pair<TreeNode*,int>>s;
+
+        s.push({root,1});
+        int maxi=0;
+        while(!s.empty())
+        {
+            auto it=s.top();
+            s.pop();
+
+            maxi=max(maxi,it.second);
+            if(it.first->left)
+            {
+                s.push({it.first->left,it.second+1});
+                
+            }
+            if(it.first->right)
+            {
+                s.push({it.first->right,it.second+1});
+            }
+        }
+        return maxi;
     }
 };
