@@ -22,30 +22,32 @@ public:
 
         while(!q.empty())
         {
-            int size=q.size();
-            vector<int>output;
-
-            for(int i=0;i<size;i++)
+            int n=q.size();
+            vector<int>temp;
+            while(n--)
             {
-                TreeNode* node=q.front();
+                auto front=q.front();
                 q.pop();
 
-                output.push_back(node->val);
-                if(node->left)
+                temp.push_back(front->val);
+                if(front->left)
                 {
-                    q.push(node->left);
+                    q.push(front->left);
                 }
-                if(node->right)
+                if(front->right)
                 {
-                    q.push(node->right);
+                    q.push(front->right);
                 }
             }
-            ans.push_back(output);
+            ans.push_back(temp);
         }
 
-        for(int i=1;i<ans.size();i=i+2)
+        for(int i=0;i<ans.size();i++)
         {
-            reverse(ans[i].begin(),ans[i].end());
+            if(i%2==1)
+            {
+                reverse(ans[i].begin(),ans[i].end());
+            }
         }
         return ans;
     }
