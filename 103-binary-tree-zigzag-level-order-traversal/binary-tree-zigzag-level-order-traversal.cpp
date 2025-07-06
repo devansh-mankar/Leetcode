@@ -19,30 +19,34 @@ public:
         }
         queue<TreeNode*>q;
         q.push(root);
-        bool swap=true;
+
         while(!q.empty())
         {
             int n=q.size();
-            vector<int>temp(n);
-            for(int i=0;i<n;i++)
+            vector<int>temp;
+            while(n--)
             {
-                auto front=q.front();
+                auto it=q.front();
                 q.pop();
-                int index=swap?i:n-i-1;
-                temp[index]=front->val;
-
-                if(front->left)
+                temp.push_back(it->val);
+                if(it->left)
                 {
-                    q.push(front->left);
+                    q.push(it->left);
                 }
-                if(front->right)
+                if(it->right)
                 {
-                    q.push(front->right);
+                    q.push(it->right);
                 }
-                
             }
-            swap=!swap;
             ans.push_back(temp);
+        }
+
+        for(int i=0;i<ans.size();i++)
+        {
+            if(i%2==1)
+            {
+                reverse(ans[i].begin(),ans[i].end());
+            }
         }
         return ans;
     }
