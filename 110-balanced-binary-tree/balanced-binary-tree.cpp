@@ -35,11 +35,9 @@ public:
             temp.second=false;
         }
         return temp;
-
     }
     bool isBalanced(TreeNode* root) {
         pair<int,bool>p=solve(root);
-      
         return p.second;
     }
 };
