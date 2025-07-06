@@ -18,26 +18,31 @@ public:
             return ans;
         }
         stack<TreeNode*>s;
+        stack<TreeNode*>s1;
         s.push(root);
 
         while(!s.empty())
         {
             auto node=s.top();
             s.pop();
-              if(node->left)
+            s1.push(node);
+            if(node->left)
             {
                 s.push(node->left);
             }
-           
             if(node->right)
             {
                 s.push(node->right);
             }
-            
-           
-            ans.push_back(node->val);
         }
-        reverse(ans.begin(),ans.end());
+
+
+        while(!s1.empty())
+        {
+            ans.push_back(s1.top()->val);
+            s1.pop();
+        }
+       
         return ans;
     }
 };
