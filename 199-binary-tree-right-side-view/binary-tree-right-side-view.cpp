@@ -26,7 +26,6 @@ public:
     }
     vector<int> rightSideView(TreeNode* root) {
         vector<int>view;
-       
         solve(root,view,0);
         return view;
     }
