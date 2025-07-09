@@ -11,31 +11,15 @@
  */
 class Solution {
 public:
-    int countNodes(TreeNode* root) {
-        int count=1;
+    int solve(TreeNode* root)
+    {
         if(root==NULL)
         {
             return 0;
         }
-        queue<TreeNode*>q;
-        q.push(root);
-
-        while(!q.empty())
-        {
-            auto it=q.front();
-            q.pop();
-
-            if(it->left)
-            {
-                count++;
-                q.push(it->left);
-            }
-            if(it->right)
-            {
-                count++;
-                q.push(it->right);
-            }
-        }
-        return count;
+      return  1+solve(root->left)+solve(root->right);
+    }
+    int countNodes(TreeNode* root) {
+        return solve(root);
     }
 };
