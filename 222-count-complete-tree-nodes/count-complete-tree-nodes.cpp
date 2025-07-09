@@ -11,19 +11,31 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root,vector<int>&count)
-    {
+    int countNodes(TreeNode* root) {
+        int count=1;
         if(root==NULL)
         {
-            return;
+            return 0;
         }
-        solve(root->left,count);
-        count.push_back(root->val);
-        solve(root->right,count);
-    }
-    int countNodes(TreeNode* root) {
-        vector<int>count;
-        solve(root,count);
-        return count.size();
+        queue<TreeNode*>q;
+        q.push(root);
+
+        while(!q.empty())
+        {
+            auto it=q.front();
+            q.pop();
+
+            if(it->left)
+            {
+                count++;
+                q.push(it->left);
+            }
+            if(it->right)
+            {
+                count++;
+                q.push(it->right);
+            }
+        }
+        return count;
     }
 };
