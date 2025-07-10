@@ -30,8 +30,7 @@ public:
                 curr->right=curr->left;
                 curr->left=NULL;
             }
-            else
-            {
+            else{
                 curr=curr->right;
             }
         }
