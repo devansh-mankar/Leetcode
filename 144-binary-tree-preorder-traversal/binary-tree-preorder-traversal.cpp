@@ -11,19 +11,40 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root,vector<int>&ans)
-    {
-        if(root==NULL)
-        {
-            return;
-        }
-        ans.push_back(root->val);
-        solve(root->left,ans);
-        solve(root->right,ans);
-    }
     vector<int> preorderTraversal(TreeNode* root) {
         vector<int>ans;
-        solve(root,ans);
+        if(root==NULL)
+        {
+            return ans;
+        }
+
+        TreeNode* curr=root;
+        while(curr)
+        {
+            if(!curr->left)
+            {
+                ans.push_back(curr->val);
+                curr=curr->right;
+            }
+            else{
+                TreeNode* pred=curr->left;
+                while(pred->right && pred->right!=curr)
+                {
+                    pred=pred->right;
+                }
+
+                if(!pred->right)
+                {
+                    pred->right=curr;
+                    ans.push_back(curr->val);
+                    curr=curr->left;
+                }
+                else{
+                    pred->right=NULL;
+                    curr=curr->right;
+                }
+            }
+        }
         return ans;
     }
 };
