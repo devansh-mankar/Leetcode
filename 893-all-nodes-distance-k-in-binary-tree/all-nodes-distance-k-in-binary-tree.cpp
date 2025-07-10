@@ -20,25 +20,24 @@ public:
 
         while(!q.empty())
         {
-            TreeNode* temp=q.front();
+            auto node=q.front();
             q.pop();
 
-            if(temp->left)
+            if(node->left)
             {
-                q.push(temp->left);
-                nodeToParent[temp->left]=temp;
+                q.push(node->left);
+                nodeToParent[node->left]=node;
             }
-            if(temp->right)
+            if(node->right)
             {
-                q.push(temp->right);
-                nodeToParent[temp->right]=temp;
+                q.push(node->right);
+                nodeToParent[node->right]=node;
             }
         }
     }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         vector<int>ans;
         unordered_map<TreeNode*,TreeNode*>nodeToParent;
-
         findParent(root,nodeToParent);
 
         unordered_map<TreeNode*,int>vis;
@@ -48,30 +47,30 @@ public:
 
         while(k--)
         {
-            int size=q.size();
-
-            while(size--)
+            int n=q.size();
+            while(n--)
             {
-                TreeNode* temp=q.front();
+                auto node=q.front();
                 q.pop();
 
-                if(temp->left && !vis[temp->left])
+                if(node->left && !vis[node->left])
                 {
-                    q.push(temp->left);
-                    vis[temp->left]=true;
+                    q.push(node->left);
+                    vis[node->left]=true;
                 }
-                if(temp->right && !vis[temp->right])
+                if(node->right && !vis[node->right])
                 {
-                    q.push(temp->right);
-                    vis[temp->right]=true;
+                    q.push(node->right);
+                    vis[node->right]=true;
                 }
-                if(nodeToParent[temp] && !vis[nodeToParent[temp]])
+                if(nodeToParent[node] && !vis[nodeToParent[node]])
                 {
-                    q.push(nodeToParent[temp]);
-                    vis[nodeToParent[temp]]=true;
+                    q.push(nodeToParent[node]);
+                    vis[nodeToParent[node]]=true;
                 }
             }
         }
+
 
         while(!q.empty())
         {
