@@ -11,32 +11,29 @@
  */
 class Solution {
 public:
-    int findPos(vector<int>&In,int ele)
+    TreeNode* solve(vector<int>&pre,vector<int>&in,int& index,unordered_map<int,int>&mp,int start,int end,int n)
     {
-        for(int i=0;i<In.size();i++)
-        {
-            if(In[i]==ele)
-            {return i;}
-        }
-        return -1;
-    }
-    TreeNode* solve(vector<int>&pre,vector<int>&In,int start,int end,int& index,int n)
-    {
-        if(index>n || start>end)
+        if(start>end || index>n)
         {
             return NULL;
         }
         int element=pre[index++];
-        TreeNode * curr=new TreeNode(element);
-        int pos=findPos(In,element);
+        int pos=mp[element];
+        TreeNode* curr=new TreeNode(element);
 
-        curr->left=solve(pre,In,start,pos-1,index,n);
-        curr->right=solve(pre,In,pos+1,end,index,n);
+        curr->left=solve(pre,in,index,mp,start,pos-1,n);
+        curr->right=solve(pre,in,index,mp,pos+1,end,n);
         return curr;
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        int n=preorder.size();
-        int preIndex=0;
-        return solve(preorder,inorder,0,n-1,preIndex,n);
+        unordered_map<int,int>mp;
+
+        for(int i=0;i<inorder.size();i++)
+        {
+            mp[inorder[i]]=i;
+        }
+        int index=0;
+        int n=inorder.size();
+        return solve(preorder,inorder,index,mp,0,n-1,n);
     }
 };
