@@ -19,6 +19,7 @@ public:
         }
         int element=pre[index++];
         int pos=mp[element];
+
         TreeNode* curr=new TreeNode(element);
 
         curr->left=solve(pre,in,index,mp,start,pos-1,n);
@@ -27,13 +28,11 @@ public:
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         unordered_map<int,int>mp;
-
         for(int i=0;i<inorder.size();i++)
         {
             mp[inorder[i]]=i;
         }
         int index=0;
-        int n=inorder.size();
-        return solve(preorder,inorder,index,mp,0,n-1,n);
+        return solve(preorder,inorder,index,mp,0,preorder.size()-1,preorder.size());
     }
 };
