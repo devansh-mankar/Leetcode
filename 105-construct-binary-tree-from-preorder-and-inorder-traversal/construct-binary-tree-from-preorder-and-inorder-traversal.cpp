@@ -11,37 +11,32 @@
  */
 class Solution {
 public:
-    int findPosition(int element,vector<int>&in)
+    int findPos(vector<int>&In,int ele)
     {
-        int n=in.size();
-
-        for(int i=0;i<n;i++)
+        for(int i=0;i<In.size();i++)
         {
-            if(in[i]==element)
-            {
-                return i;
-            }
+            if(In[i]==ele)
+            {return i;}
         }
         return -1;
     }
-    TreeNode* solve(vector<int>&pre,vector<int>&in,int& index,int Instart,int Inend,int n)
+    TreeNode* solve(vector<int>&pre,vector<int>&In,int start,int end,int& index,int n)
     {
-        if(Instart>Inend || index>n)
+        if(index>n || start>end)
         {
             return NULL;
         }
         int element=pre[index++];
-        TreeNode* temp=new TreeNode(element);
-        int pos=findPosition(element,in);
+        TreeNode * curr=new TreeNode(element);
+        int pos=findPos(In,element);
 
-        temp->left=solve(pre,in,index,Instart,pos-1,n);
-        temp->right=solve(pre,in,index,pos+1,Inend,n);
-
-        return temp;
+        curr->left=solve(pre,In,start,pos-1,index,n);
+        curr->right=solve(pre,In,pos+1,end,index,n);
+        return curr;
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         int n=preorder.size();
         int preIndex=0;
-        return solve(preorder,inorder,preIndex,0,n-1,n);
+        return solve(preorder,inorder,0,n-1,preIndex,n);
     }
 };
