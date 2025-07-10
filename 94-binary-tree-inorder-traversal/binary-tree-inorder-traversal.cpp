@@ -17,7 +17,6 @@ public:
         {
             return ans;
         }
-
         TreeNode* curr=root;
         while(curr)
         {
@@ -32,7 +31,6 @@ public:
                 {
                     pred=pred->right;
                 }
-
                 if(pred->right==NULL)
                 {
                     pred->right=curr;
@@ -44,6 +42,7 @@ public:
                     curr=curr->right;
                 }
             }
+
         }
         return ans;
     }
