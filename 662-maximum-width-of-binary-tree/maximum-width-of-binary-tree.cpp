@@ -11,45 +11,19 @@
  */
 class Solution {
 public:
+    long long solve(TreeNode* root,int l,long long i,unordered_map<int,long long>&mp)
+    {
+        if(root==NULL) return 0;
+        if(mp.find(l)==mp.end()) mp[l]=i;
+
+        long long normalizedIndex=i-mp[l];
+        long long left=solve(root->left,l+1,2*normalizedIndex,mp);
+        long long right=solve(root->right,l+1,2*normalizedIndex+1,mp);
+
+        return max(max(left,right),(i-mp[l]+1));
+    }
     int widthOfBinaryTree(TreeNode* root) {
-        if(root==NULL)
-        {
-            return 0;
-        }
-        queue<pair<TreeNode*,long long>>q;
-        q.push({root,0});
-        long long ans=0;
-        while(!q.empty())
-        {
-            int n=q.size();
-            long long leftMost,rightMost;
-            long long currMin=q.front().second;
-
-            for(int i=0;i<n;i++)
-            {
-                auto node=q.front().first;
-                long long currIndex=q.front().second-currMin;
-                q.pop();
-
-                if(i==0)
-                {
-                    leftMost=currIndex;
-                }
-                if(i==n-1)
-                {
-                    rightMost=currIndex;
-                }
-                if(node->left)
-                {
-                    q.push({node->left,2*currIndex+1});
-                }
-                if(node->right)
-                {
-                    q.push({node->right,2*currIndex+2});
-                }
-            }
-            ans=max(ans,rightMost-leftMost+1);
-        }
-        return ans;
+        unordered_map<int,long long>mp;
+        return solve(root,0,0,mp);
     }
 };
