@@ -13,6 +13,10 @@ class Solution {
 public:
     TreeNode* getMin(TreeNode* root)
     {
+        if(root==NULL)
+        {
+            return NULL;
+        }
         while(root->left)
         {
             root=root->left;
@@ -26,31 +30,24 @@ public:
         }
         if(root->val==key)
         {
-            //if it is leaf node
             if(!root->left && !root->right)
             {
                 delete root;
                 return NULL;
             }
-            //if single child present
-
-            //right child is present
-           else if(!root->left && root->right)
+            if(!root->left && root->right)
             {
                 TreeNode* temp=root->right;
                 delete root;
                 return temp;
             }
-
-            //left child is present
-            else if(!root->right && root->left)
+            else if(root->left && !root->right)
             {
                 TreeNode* temp=root->left;
                 delete root;
                 return temp;
             }
-            else
-            {
+            else{
                 int mini=getMin(root->right)->val;
                 root->val=mini;
 
@@ -62,8 +59,7 @@ public:
         {
             root->left=deleteNode(root->left,key);
         }
-        else
-        {
+        else{
             root->right=deleteNode(root->right,key);
         }
         return root;
