@@ -21,7 +21,7 @@ public:
         in.push_back(root->val);
         solve(root->right,in);
     }
-    int i=0;
+        int i=0;
     void check(TreeNode* root,vector<int>&in)
     {
         if(root==NULL)
