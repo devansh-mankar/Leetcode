@@ -22,15 +22,13 @@ public:
         solve(root->right,in);
     }
     int getMinimumDifference(TreeNode* root) {
-        vector<int>inorder;
-        solve(root,inorder);
-
+        vector<int>in;
+        solve(root,in);
         int mini=INT_MAX;
-        for(int i=1;i<inorder.size();i++)
+        for(int i=1;i<in.size();i++)
         {
-            mini=min(mini,abs(inorder[i]-inorder[i-1]));
+            mini=min(mini,abs(in[i]-in[i-1]));
         }
         return mini;
-
     }
 };
