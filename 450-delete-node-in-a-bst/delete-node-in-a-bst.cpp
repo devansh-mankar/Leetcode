@@ -35,13 +35,13 @@ public:
                 delete root;
                 return NULL;
             }
-            if(!root->left && root->right)
+           else if(!root->left && root->right)
             {
                 TreeNode* temp=root->right;
                 delete root;
                 return temp;
             }
-            else if(root->left && !root->right)
+           else if(root->left && !root->right)
             {
                 TreeNode* temp=root->left;
                 delete root;
@@ -50,17 +50,16 @@ public:
             else{
                 int mini=getMin(root->right)->val;
                 root->val=mini;
-
                 root->right=deleteNode(root->right,mini);
                 return root;
             }
         }
         else if(root->val>key)
         {
-            root->left=deleteNode(root->left,key);
+            root->left=  deleteNode(root->left,key);
         }
         else{
-            root->right=deleteNode(root->right,key);
+            root->right=  deleteNode(root->right,key);
         }
         return root;
     }
