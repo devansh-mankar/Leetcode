@@ -11,37 +11,35 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root,vector<int>&inorder)
+    void solve(TreeNode* root,vector<int>&in)
     {
         if(root==NULL)
         {
             return;
         }
-        solve(root->left,inorder);
-        inorder.push_back(root->val);
-        solve(root->right,inorder);
+        solve(root->left,in);
+        in.push_back(root->val);
+        solve(root->right,in);
     }
-
     int i=0;
-    void check(TreeNode* root,vector<int>&inorder)
+    void check(TreeNode* root,vector<int>&in)
     {
         if(root==NULL)
         {
             return;
         }
-        check(root->left,inorder);
-        if(inorder[i]!=root->val)
+        check(root->left,in);
+        if(in[i]!=root->val)
         {
-            swap(inorder[i],root->val);
+            swap(in[i],root->val);
         }
         i++;
-        check(root->right,inorder);
+        check(root->right,in);
     }
     void recoverTree(TreeNode* root) {
-        vector<int>inorder;
-        solve(root,inorder);
-        sort(inorder.begin(),inorder.end());
-        check(root,inorder);
-        
+        vector<int>in;
+        solve(root,in);
+        sort(in.begin(),in.end());
+        check(root,in);
     }
 };
