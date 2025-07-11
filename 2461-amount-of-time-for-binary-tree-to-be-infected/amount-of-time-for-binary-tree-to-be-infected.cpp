@@ -11,92 +11,32 @@
  */
 class Solution {
 public:
-     TreeNode* findStart(TreeNode* root, int start) {
-        if (!root) return nullptr;
-        if (root->val == start) return root;
-        
-        TreeNode* left = findStart(root->left, start);
-        if (left) return left;
-        
-        return findStart(root->right, start);
-    }
-    void findParent(TreeNode* root,unordered_map<TreeNode*,TreeNode*>&nodeToParent)
+    int result=INT_MIN;
+
+    int solve(TreeNode* root,int start)
     {
-        if(root==NULL)
+        if(root==NULL) return 0;
+        int LH=solve(root->left,start);
+        int RH=solve(root->right,start);
+
+        if(root->val==start)
         {
-            return;
+            result=max(LH,RH);
+            return -1;
         }
-        queue<TreeNode*>q;
-        q.push(root);
-
-        while(!q.empty())
+        else if(LH>=0 && RH>=0)
         {
-            int size=q.size();
-            while(size--)
-            {
-                auto node=q.front();
-                q.pop();
-
-                if(node->left)
-                {
-                    q.push(node->left);
-                    nodeToParent[node->left]=node;
-                }
-                if(node->right)
-                {
-                    q.push(node->right);
-                    nodeToParent[node->right]=node;
-                }
-            }
+            return max(LH,RH)+1;
         }
-    }
-    int solve(TreeNode* start,unordered_map<TreeNode*,TreeNode*>&nodeToParent)
-    {
-        int time=0;
-        unordered_map<TreeNode*,int>vis;
-        queue<TreeNode*>q;
-        q.push(start);
-        vis[start]=true;
-
-        while(!q.empty())
-        {
-            int n=q.size();
-            bool flag=0;
-            while(n--)
-            {
-                auto node=q.front();
-                q.pop();
-
-                if(node->left && !vis[node->left])
-                {
-                    flag=1;
-                    vis[node->left]=true;
-                    q.push(node->left);
-                }
-                if(node->right && !vis[node->right])
-                {
-                    flag=1;
-                    vis[node->right]=true;
-                    q.push(node->right);
-                }
-                if(nodeToParent[node] && !vis[nodeToParent[node]])
-                {
-                    flag=1;
-                    vis[nodeToParent[node]]=true;
-                    q.push(nodeToParent[node]);
-                }
-            }
-            if(flag==1)
-            {
-                time++;
-            }
+        else{
+            int d=abs(LH)+abs(RH);
+            result=max(result,d);
+            return min(LH,RH)-1;
         }
-        return time;
+        return 0;
     }
     int amountOfTime(TreeNode* root, int start) {
-      TreeNode* temp= findStart(root,start);
-        unordered_map<TreeNode*,TreeNode*>nodeToParent;
-        findParent(root,nodeToParent);
-        return solve(temp,nodeToParent);
+         solve(root,start);
+        return result;
     }
 };
