@@ -3,11 +3,10 @@ public:
     int orangesRotting(vector<vector<int>>& grid) {
         int n=grid.size();
         int m=grid[0].size();
-        
         vector<vector<int>>vis(n,vector<int>(m,0));
+        queue<pair<pair<int,int>,int>>q;
 
         int countFresh=0;
-        queue<pair<pair<int,int>,int>>q;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
@@ -23,27 +22,30 @@ public:
                 }
             }
         }
-        int time=0,count=0;
-        int dr[]={-1,0,1,0};
-        int dc[]={0,1,0,-1};
+
+
+        int count=0,time=0;
+        vector<int>dr={-1,0,1,0};
+        vector<int>dc={0,1,0,-1};
+
         while(!q.empty())
         {
             int row=q.front().first.first;
             int col=q.front().first.second;
             int t=q.front().second;
             q.pop();
-            time=max(t,time);
+            time=max(time,t);
 
             for(int i=0;i<4;i++)
             {
-                int nrow=dr[i]+row;
-                int ncol=dc[i]+col;
+                int nr=row+dr[i];
+                int nc=col+dc[i];
 
-            if((nrow>=0 && nrow<n) && (ncol>=0 && ncol<m) && (!vis[nrow][ncol]) && (grid[nrow][ncol]==1))
+                if(nr>=0 && nr<n && nc>=0 && nc<m && !vis[nr][nc] && grid[nr][nc]==1)
                 {
+                    vis[nr][nc]=true;
                     count++;
-                    vis[nrow][ncol]=true;
-                    q.push({{nrow,ncol},t+1});
+                    q.push({{nr,nc},t+1});
                 }
             }
         }
@@ -53,7 +55,5 @@ public:
             return -1;
         }
         return time;
-
     }
-
 };
