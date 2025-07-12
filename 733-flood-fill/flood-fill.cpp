@@ -1,31 +1,36 @@
 class Solution {
 public:
-    void solve(int row,int col,int color,vector<vector<int>>&temp,vector<vector<int>>&image)
-    {
-        temp[row][col]=color;
-        int n=image.size();
-        int m=image[0].size();
-
-        int dr[]={-1,0,1,0};
-        int dc[]={0,1,0,-1};
-
-        for(int i=0;i<4;i++)
-        {
-            int nrow=row+dr[i];
-            int ncol=col+dc[i];
-
-        if(nrow>=0 && nrow<n && ncol>=0 && ncol<m && image[nrow][ncol]==image[row][col] && temp[nrow][ncol]!=color)
-            {
-                solve(nrow,ncol,color,temp,image);
-            }
-        }
-    }
     vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        vector<vector<int>>temp=image;
         int n=image.size();
         int m=image[0].size();
 
-        vector<vector<int>>temp=image;
-        solve(sr,sc,color,temp,image);
+        queue<pair<int,int>>q;
+        q.push({sr,sc});
+        temp[sr][sc]=color;
+
+        vector<int>dr={-1,0,1,0};
+        vector<int>dc={0,1,0,-1};
+
+        while(!q.empty())
+        {
+            int row=q.front().first;
+            int col=q.front().second;
+            q.pop();
+
+            for(int i=0;i<4;i++)
+            {
+                int nr=row+dr[i];
+                int nc=col+dc[i];
+
+                if(nr>=0 && nr<n && nc>=0 && nc<m && temp[nr][nc]!=color && image[sr][sc]==temp[nr][nc])
+                {
+                    q.push({nr,nc});
+                    temp[nr][nc]=color;
+                }
+            }
+
+        }
         return temp;
     }
 };
