@@ -1,36 +1,53 @@
-
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    void solve(TreeNode* root,vector<int>&in)
+    TreeNode* first=NULL;
+    TreeNode* last=NULL;
+    TreeNode* middle=NULL;
+    TreeNode* prev=NULL;
+    void inorder(TreeNode* root)
     {
         if(root==NULL)
         {
             return;
         }
-        solve(root->left,in);
-        in.push_back(root->val);
-        solve(root->right,in);
-    }
-        int i=0;
-    void check(TreeNode* root,vector<int>&in)
-    {
-        if(root==NULL)
+        inorder(root->left);
+        if(prev!=NULL && (prev->val>root->val))
         {
-            return;
+            if(first==NULL)
+            {
+                first=prev;
+                middle=root;
+            }
+            else{
+                last=root;
+            }
         }
-        check(root->left,in);
-        if(in[i]!=root->val)
-        {
-            swap(root->val,in[i]);
-        }
-        i++;
-        check(root->right,in);
+        prev=root;
 
+        inorder(root->right);
     }
     void recoverTree(TreeNode* root) {
-        vector<int>in;
-        solve(root,in);
-        sort(in.begin(),in.end());
-        check(root,in);
+        prev=new TreeNode(INT_MIN);
+        inorder(root);
+        
+        if(first && last)
+        {
+            swap(first->val,last->val);
+        }
+       else if(first && middle)
+       {
+        swap(first->val,middle->val);
+       }
     }
 };
