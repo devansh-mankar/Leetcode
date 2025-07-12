@@ -1,44 +1,59 @@
 class Solution {
 public:
-    void dfs(int row,int col,vector<vector<int>>&grid,int min=2)
-    {
-        if(row<0 || row>=grid.size() || col<0 || col>=grid[0].size() || grid[row][col]==0 || grid[row][col]>1 && grid[row][col]<min)
-        {
-            return;
-        }
-
-        grid[row][col]=min;
-        dfs(row-1,col,grid,min+1);
-        dfs(row,col+1,grid,min+1);
-        dfs(row+1,col,grid,min+1);
-        dfs(row,col-1,grid,min+1);
-    }
     int orangesRotting(vector<vector<int>>& grid) {
         int n=grid.size();
         int m=grid[0].size();
 
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        queue<pair<pair<int,int>,int>>q;
+        
+        int countFresh=0;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
                 if(grid[i][j]==2)
                 {
-                    dfs(i,j,grid);
+                    vis[i][j]=true;
+                    q.push({{i,j},0});
                 }
-            }
-        }
-        int mini=2;
-        for(auto i:grid)
-        {
-            for(auto j:i)
-            {
-                if(j==1)
+                else if(grid[i][j]==1)
                 {
-                    return -1;
+                    countFresh++;
                 }
-                mini=max(mini,j);
             }
         }
-        return mini-2;
+
+        int count=0,time=0;
+        vector<int>dr={-1,0,1,0};
+        vector<int>dc={0,1,0,-1};
+
+        while(!q.empty())
+        {
+            int row=q.front().first.first;
+            int col=q.front().first.second;
+            int t=q.front().second;
+            q.pop();
+
+            time=max(time,t);
+
+            for(int i=0;i<4;i++)
+            {
+                int nr=row+dr[i];
+                int nc=col+dc[i];
+
+                if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]==1 && !vis[nr][nc])
+                {
+                    count++;
+                    vis[nr][nc]=1;
+                    q.push({{nr,nc},t+1});
+                }
+            }
+        }
+        if(count!=countFresh)
+        {
+            return -1;
+        }
+        return time;
     }
 };
