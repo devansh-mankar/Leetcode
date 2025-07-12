@@ -1,14 +1,4 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
+
 class Solution {
 public:
     void solve(TreeNode* root,vector<int>&in)
@@ -31,10 +21,11 @@ public:
         check(root->left,in);
         if(in[i]!=root->val)
         {
-            swap(in[i],root->val);
+            swap(root->val,in[i]);
         }
         i++;
         check(root->right,in);
+
     }
     void recoverTree(TreeNode* root) {
         vector<int>in;
