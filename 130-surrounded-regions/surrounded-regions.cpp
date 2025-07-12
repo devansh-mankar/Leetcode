@@ -1,49 +1,51 @@
 class Solution {
 public:
-    void dfs(int row,int col,vector<vector<char>>&board)
-    {
-        if(row<0 || col<0 || row>=board.size() || col>=board[0].size() || board[row][col]!='O')
-        {
-            return;
-        }
-        board[row][col]='P';
-        dfs(row-1,col,board);
-        dfs(row,col+1,board);
-        dfs(row+1,col,board);
-        dfs(row,col-1,board);
-    }
     void solve(vector<vector<char>>& board) {
-        if(board.empty() || board[0].empty())
-        {
-            return;
-        }
+        if(board.empty() || board[0].empty()) return;
+
         int n=board.size();
         int m=board[0].size();
 
+        queue<pair<int,int>>q;
+
         for(int i=0;i<n;i++)
         {
-            if(board[i][0]=='O')
+            for(int j=0;j<m;j++)
             {
-                dfs(i,0,board);
-            }
-            if(board[i][m-1]=='O')
-            {
-                dfs(i,m-1,board);
+                if(i==0 || i==n-1 || j==0 || j==m-1)
+                {
+                    if(board[i][j]=='O')
+                    {
+                         board[i][j]='P';
+                    q.push({i,j});
+                    }
+                   
+                }
             }
         }
 
-        for(int j=0;j<m;j++)
+        vector<int>dr={-1,0,1,0};
+        vector<int>dc={0,1,0,-1};
+        while(!q.empty())
         {
-            if(board[0][j]=='O')
-            {
-                dfs(0,j,board);
-            }
-            if(board[n-1][j]=='O')
-            {
-                dfs(n-1,j,board);
-            }
-        }
+            int row=q.front().first;
+            int col=q.front().second;
+            q.pop();
 
+            for(int i=0;i<4;i++)
+            {
+                int nr=row+dr[i];
+                int nc=col+dc[i];
+
+            if(nr>=0 && nr<n && nc>=0 && nc<m && board[nr][nc]=='O')
+            {
+                board[nr][nc]='P';
+                q.push({nr,nc});
+            }
+            }
+            
+        }
+        
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
