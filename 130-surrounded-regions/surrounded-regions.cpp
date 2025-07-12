@@ -1,33 +1,57 @@
 class Solution {
 public:
-    void dfs(int row,int col,vector<vector<int>>&vis,vector<vector<char>>&board)
-    {
-        if(row<0 || row>=board.size() || col<0 || col>=board[0].size() || vis[row][col] || board[row][col]!='O')
-        {
-            return;
-        }
-        
-        vis[row][col]=true;
-        dfs(row+1,col,vis,board);
-        dfs(row-1,col,vis,board);
-        dfs(row,col+1,vis,board);
-        dfs(row,col-1,vis,board);
-    }
     void solve(vector<vector<char>>& board) {
+        if(board.empty() || board[0].empty()) return;
         int n=board.size();
         int m=board[0].size();
 
-        vector<vector<int>>vis(n,vector<int>(m,0));
+        queue<pair<int,int>>q;
+
         for(int i=0;i<n;i++)
         {
-            for(int j=0;j<m;j++)
+            if(board[i][0]=='O')
             {
-                if(i==0 || i==n-1 || j==0 || j==m-1)
+                board[i][0]='P';
+                q.push({i,0});
+            }
+            if(board[i][m-1]=='O')
+            {
+                board[i][m-1]='P';
+                q.push({i,m-1});
+            }
+        }
+
+        for(int j=0;j<m;j++)
+        {
+            if(board[0][j]=='O')
+            {
+                q.push({0,j});
+                board[0][j]='P';
+            }
+            if(board[n-1][j]=='O')
+            {
+                q.push({n-1,j});
+                board[n-1][j]='P';
+            }
+        }
+
+
+        vector<int>dr={-1,0,1,0};
+        vector<int>dc={0,1,0,-1};
+        while(!q.empty())
+        {
+            int row=q.front().first;
+            int col=q.front().second;
+            q.pop();
+
+            for(int i=0;i<4;i++)
+            {
+                    int nr=row+dr[i];
+                    int nc=col+dc[i];
+                if(nr>=0 && nr<n && nc>=0 && nc<m && board[nr][nc]=='O')
                 {
-                    if(board[i][j]=='O')
-                    {
-                        dfs(i,j,vis,board);
-                    }
+                    board[nr][nc]='P';
+                    q.push({nr,nc});
                 }
             }
         }
@@ -36,11 +60,16 @@ public:
         {
             for(int j=0;j<m;j++)
             {
-                if(!vis[i][j] && board[i][j]=='O')
+                if(board[i][j]=='O')
                 {
                     board[i][j]='X';
                 }
+                else if(board[i][j]=='P')
+                {
+                    board[i][j]='O';
+                }
             }
         }
+
     }
 };
