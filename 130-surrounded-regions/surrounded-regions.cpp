@@ -1,23 +1,34 @@
 class Solution {
 public:
+    void dfs(int row,int col,vector<vector<char>>&board)
+    {
+        if(row<0 || col<0 || row>=board.size() || col>=board[0].size() || board[row][col]!='O')
+        {
+            return;
+        }
+        board[row][col]='P';
+        dfs(row-1,col,board);
+        dfs(row,col+1,board);
+        dfs(row+1,col,board);
+        dfs(row,col-1,board);
+    }
     void solve(vector<vector<char>>& board) {
-        if(board.empty() || board[0].empty()) return;
+        if(board.empty() || board[0].empty())
+        {
+            return;
+        }
         int n=board.size();
         int m=board[0].size();
-
-        queue<pair<int,int>>q;
 
         for(int i=0;i<n;i++)
         {
             if(board[i][0]=='O')
             {
-                q.push({i,0});
-                board[i][0]='P';
+                dfs(i,0,board);
             }
             if(board[i][m-1]=='O')
             {
-                q.push({i,m-1});
-                board[i][m-1]='P';
+                dfs(i,m-1,board);
             }
         }
 
@@ -25,37 +36,13 @@ public:
         {
             if(board[0][j]=='O')
             {
-                q.push({0,j});
-                board[0][j]='P';
+                dfs(0,j,board);
             }
-             if(board[n-1][j]=='O')
+            if(board[n-1][j]=='O')
             {
-                q.push({n-1,j});
-                board[n-1][j]='P';
+                dfs(n-1,j,board);
             }
         }
-
-        vector<int>dr={-1,0,1,0};
-        vector<int>dc={0,1,0,-1};
-        while(!q.empty())
-        {
-                int row=q.front().first;
-                int col=q.front().second;
-                q.pop();
-
-                for(int i=0;i<4;i++)
-                {
-                    int nr=row+dr[i];
-                    int nc=col+dc[i];
-
-                    if(nr>=0 && nr<n && nc>=0 && nc<m && board[nr][nc]=='O')
-                    {
-                        q.push({nr,nc});
-                        board[nr][nc]='P';
-                    }
-            }
-        }
-
 
         for(int i=0;i<n;i++)
         {
