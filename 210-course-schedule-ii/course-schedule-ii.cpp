@@ -1,56 +1,59 @@
 class Solution {
 public:
-    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int>adj[numCourses];
-
-        for(auto it:prerequisites)
+    bool dfs(int node,vector<int>&vis,stack<int>&s,vector<vector<int>>&adj,vector<int>&dfsCall)
+    {
+        vis[node]=true;
+        dfsCall[node]=true;
+        for(auto it:adj[node])
         {
-            int u=it[0];
-            int v=it[1];
+            if(!vis[it])
+            {
+                if(dfs(it,vis,s,adj,dfsCall))
+                {
+                    return true;
+                }
+            }
+            if(dfsCall[it])
+            {
+                return true;
+            }
+        }
+        s.push(node);
+        dfsCall[node]=false;
+        return false;
+    }
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>>adj(numCourses);
+
+        for(int i=0;i<prerequisites.size();i++)
+        {
+            int u=prerequisites[i][0];
+            int v=prerequisites[i][1];
 
             adj[v].push_back(u);
         }
 
-        vector<int>indegree(numCourses,0);
-
+        vector<int>vis(numCourses,0);
+        stack<int>s;
+        vector<int>dfsCall(numCourses,0);
         for(int i=0;i<numCourses;i++)
         {
-            for(auto it:adj[i])
+            if(!vis[i])
             {
-                indegree[it]++;
-            }
-        }
-
-        queue<int>q;
-        for(int i=0;i<numCourses;i++)
-        {
-            if(indegree[i]==0)
-            {
-                q.push(i);
+                dfs(i,vis,s,adj,dfsCall);
             }
         }
 
         vector<int>ans;
-        while(!q.empty())
+        while(!s.empty())
         {
-            int front=q.front();
-            q.pop();
-
-            ans.push_back(front);
-            for(auto it:adj[front])
-            {
-                indegree[it]--;
-                if(indegree[it]==0)
-                {
-                    q.push(it);
-                }
-            }
+            ans.push_back(s.top());
+            s.pop();
         }
-
-        if(ans.size()==numCourses)
+        if(ans.size()!=numCourses)
         {
-            return ans;
+            return {};
         }
-        return vector<int>();
+        return ans;
     }
 };
