@@ -1,57 +1,50 @@
 class Solution {
 public:
-   
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<int>adj[numCourses];
+    bool dfs(int node,vector<int>&vis,vector<int>&dfsCall,vector<vector<int>>&adj)
+    {
+        vis[node]=true;
+        dfsCall[node]=true;
 
-        for(auto it:prerequisites)
+        for(auto it:adj[node])
         {
-            int u=it[0];
-            int v=it[1];
+            if(!vis[it])
+            {
+                if(dfs(it,vis,dfsCall,adj))
+                {
+                    return true;
+                }
+            }
+            if(dfsCall[it])
+            {
+                return true;
+            }
+        }
+        dfsCall[node]=false;
+        return false;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>>adj(numCourses);
 
+        for(int i=0;i<prerequisites.size();i++)
+        {
+            int u=prerequisites[i][0];
+            int v=prerequisites[i][1];
             adj[u].push_back(v);
         }
 
-        vector<int>indegree(numCourses,0);
+        vector<int>vis(numCourses,0);
+        vector<int>dfsCall(numCourses,0);
+
         for(int i=0;i<numCourses;i++)
         {
-            for(auto it:adj[i])
+            if(!vis[i])
             {
-                indegree[it]++;
-            }
-        }
-
-        queue<int>q;
-        for(int i=0;i<numCourses;i++)
-        {
-            if(indegree[i]==0)
-            {
-                q.push(i);
-            }
-        }
-
-        int count=0;
-        while(!q.empty())
-        {
-            int front=q.front();
-            q.pop();
-            count++;
-
-            for(auto it:adj[front])
-            {
-                indegree[it]--;
-                if(indegree[it]==0)
+                if(dfs(i,vis,dfsCall,adj))
                 {
-                    q.push(it);
+                    return false;
                 }
             }
         }
-
-        if(count==numCourses)
-        {
-            return true;
-        }
-        return false;
-        
+        return true;
     }
 };
