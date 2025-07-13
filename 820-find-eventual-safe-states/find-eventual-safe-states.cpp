@@ -1,48 +1,39 @@
 class Solution {
 public:
-    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        //already graph is the adjacency list
-        int n=graph.size();
-        vector<int>indegree(n,0);
-        vector<vector<int>>adj(n);
+    bool dfs(int node,vector<int>&vis,vector<int>&dfsCall,vector<vector<int>>&graph,vector<int>&ans)
+    {
+        vis[node]=true;
+        dfsCall[node]=true;
 
-        for(int i=0;i<n;i++)
+        for(auto it:graph[node])
         {
-            for(auto j:graph[i])
+            if(!vis[it])
             {
-                adj[j].push_back(i);
-            }
-        }
-        for(int i=0;i<n;i++)
-        {
-            for(auto it:adj[i])
-            {
-                indegree[it]++;
-            }
-        }
-        queue<int>q;
-        for(int i=0;i<n;i++)
-        {
-            if(indegree[i]==0)
-            {
-                q.push(i);
-            }
-        }
-        vector<int>ans;
-        int count=0;
-        while(!q.empty())
-        {
-            int node=q.front();
-            q.pop();
-            ans.push_back(node);
-
-            for(auto it:adj[node])
-            {
-                indegree[it]--;
-                if(indegree[it]==0)
+                if(dfs(it,vis,dfsCall,graph,ans))
                 {
-                    q.push(it);
+                    return true;
                 }
+            }
+            else if(dfsCall[it])
+            {
+                return true;
+            }
+        }
+        ans.push_back(node);
+        dfsCall[node]=false;
+        return false;
+    }
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n=graph.size();
+        vector<int>vis(n,0);
+        vector<int>dfsCall(n,0);
+        vector<int>ans;
+
+        for(int i=0;i<n;i++)
+        {
+            if(!vis[i])
+            {
+                dfs(i,vis,dfsCall,graph,ans);
             }
         }
         sort(ans.begin(),ans.end());
