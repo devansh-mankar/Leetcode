@@ -1,5 +1,30 @@
 class Solution {
 public:
+    bool dfs(int node,stack<int>&s,vector<int>&vis,vector<int>&dfsCall,vector<vector<int>>&adj)
+    {
+        vis[node]=true;
+        dfsCall[node]=true;
+       
+
+        for(auto it:adj[node])
+        {
+            if(!vis[it])
+            {
+                if(dfs(it,s,vis,dfsCall,adj))
+                {
+                    return true;
+                }
+            }
+            else if(dfsCall[it])
+            {
+                return true;
+            }
+        }
+         s.push(node);
+        dfsCall[node]=false;
+        return false;
+        
+    }
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         vector<vector<int>>adj(numCourses);
 
@@ -7,43 +32,27 @@ public:
         {
             int u=prerequisites[i][0];
             int v=prerequisites[i][1];
+
             adj[v].push_back(u);
         }
 
-        vector<int>indegree(numCourses,0);
-        for(int i=0;i<numCourses;i++)
-        {
-            for(auto it:adj[i])
-            {
-                indegree[it]++;
-            }
-        }
+        vector<int>vis(numCourses,0);
+        vector<int>dfsCall(numCourses,0);
+        stack<int>s;
 
-        queue<int>q;
         for(int i=0;i<numCourses;i++)
         {
-            if(indegree[i]==0)
+            if(!vis[i])
             {
-                q.push(i);
+                dfs(i,s,vis,dfsCall,adj);
             }
         }
 
         vector<int>ans;
-        
-        while(!q.empty())
+        while(!s.empty())
         {
-            auto node=q.front();
-            q.pop();
-            ans.push_back(node);
-
-            for(auto it:adj[node])
-            {
-                indegree[it]--;
-                if(indegree[it]==0)
-                {
-                    q.push(it);
-                }
-            }
+            ans.push_back(s.top());
+            s.pop();
         }
 
         if(ans.size()!=numCourses)
@@ -51,5 +60,6 @@ public:
             return {};
         }
         return ans;
+
     }
 };
