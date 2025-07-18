@@ -6,23 +6,27 @@ public:
         {
             return -1;
         }
-        queue<pair<int,int>>q;
-        q.push({0,0});
+        vector<vector<int>>dist(n,vector<int>(n,INT_MAX));
 
-        grid[0][0]=1;
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>>pq;
+        pq.push({1,{0,0}});
+        dist[0][0]=1;
+
         vector<int>dr={-1,0,1,0,1,1,-1,-1};
         vector<int>dc={0,1,0,-1,1,-1,1,-1};
-        while(!q.empty())
-        {
-            int row=q.front().first;
-            int col=q.front().second;
-            q.pop();
 
-            int currd=grid[row][col];
+        while(!pq.empty())
+        {
+            int d=pq.top().first;
+            int row=pq.top().second.first;
+            int col=pq.top().second.second;
+            pq.pop();
+
             if(row==n-1 && col==n-1)
             {
-                return currd;
+                return d;
             }
+
             for(int i=0;i<8;i++)
             {
                 int nr=row+dr[i];
@@ -30,8 +34,12 @@ public:
 
                 if(nr>=0 && nr<n && nc>=0 && nc<n && grid[nr][nc]==0)
                 {
-                    grid[nr][nc]=currd+1;
-                    q.push({nr,nc});
+                    int newd=d+1;
+                    if(dist[nr][nc]>newd)
+                    {
+                        dist[nr][nc]=newd;
+                        pq.push({newd,{nr,nc}});
+                    }
                 }
             }
         }
