@@ -1,50 +1,109 @@
+class DisjointSet{
+    vector<int>rank,size,parent;
+    public:
+    DisjointSet(int n)
+    {
+        rank.resize(n+1,0);
+        size.resize(n+1,1);
+        parent.resize(n+1);
+        for(int i=0;i<=n;i++)
+        {
+            parent[i]=i;
+        }
+    }
+
+    int findUPar(int node)
+    {
+        if(node==parent[node])
+        {
+            return node;
+        }
+        return parent[node]=findUPar(parent[node]);
+    }
+
+    void unionByRank(int u,int v)
+    {
+        int pu=findUPar(u);
+        int pv=findUPar(v);
+        if(pu==pv)
+        {
+            return;
+        }
+        if(rank[pu]<rank[pv])
+        {
+            parent[pu]=pv;
+        }
+        else if(rank[pv]<rank[pu])
+        {
+            parent[pv]=pu;
+        }
+        else{
+            parent[pv]=pu;
+            rank[pu]++;
+        }
+    }
+
+    void unionBySize(int u,int v)
+    {
+        int pu=findUPar(u);
+        int pv=findUPar(v);
+        if(pu==pv)
+        {
+            return;
+        }
+        if(size[pu]<size[pv])
+        {
+            parent[pu]=pv;
+            size[pv]+=size[pu];
+        }
+        else{
+            parent[pv]=pu;
+            size[pu]+=size[pv];
+        }
+    }
+
+    bool connected(int u,int v)
+    {
+        return findUPar(u)==findUPar(v);
+    }
+};
 class Solution {
 public:
-    bool dfs(int row,int col,int effort,vector<vector<int>>&vis,vector<vector<int>>&heights)
-    {
-        if(row==heights.size()-1 && col==heights[0].size()-1)
+    int minimumEffortPath(vector<vector<int>>& heights) {
+        int n=heights.size();
+        int m=heights[0].size();
+
+        vector<tuple<int,int,int>>edges;
+
+        for(int i=0;i<n;i++)
         {
-            return true;
-        }
-        vis[row][col]=true;
-        vector<int>dr={-1,0,1,0};
-        vector<int>dc={0,1,0,-1};
-        for(int i=0;i<4;i++)
-        {
-            int nr=row+dr[i];
-            int nc=col+dc[i];
-            if(nr>=0 && nr<heights.size() && nc>=0 && nc<heights[0].size() && !vis[nr][nc])
+            for(int j=0;j<m;j++)
             {
-                int neff=abs(heights[nr][nc]-heights[row][col]);
-                if(neff<=effort && dfs(nr,nc,effort,vis,heights))
+                int cell=i*m+j;
+                if(j+1<m)
                 {
-                    return true;
+                    int weight=abs(heights[i][j]-heights[i][j+1]);
+                    edges.push_back({weight,cell,cell+1});
+                }
+                if(i+1<n)
+                {
+                    int weight=abs(heights[i][j]-heights[i+1][j]);
+                    edges.push_back({weight,cell,cell+m});
                 }
             }
         }
-        return false;
-    }
-    bool canReach(int effort,vector<vector<int>>&heights)
-    {
-        int n=heights.size();
-        int m=heights[0].size();
-        vector<vector<int>>vis(n,vector<int>(m,0));
-        return dfs(0,0,effort,vis,heights);
-    }
-    int minimumEffortPath(vector<vector<int>>& heights) {
-        int left=0,right=1000000;
 
-        while(left<right)
+        sort(edges.begin(),edges.end());
+        DisjointSet ds(n*m);
+
+        for(auto [weight,u,v]:edges)
         {
-            int mid=left+(right-left)/2;
-            if(canReach(mid,heights))
+            ds.unionByRank(u,v);
+            if(ds.connected(0,n*m-1))
             {
-                right=mid;
-            }
-            else{
-                left=mid+1;
+                return weight;
             }
         }
-        return left;
+        return 0;
     }
 };
