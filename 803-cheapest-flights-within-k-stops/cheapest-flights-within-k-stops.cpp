@@ -11,33 +11,42 @@ public:
             adj[u].push_back({v,wt});
         }
 
-        queue<pair<int,pair<int,int>>>q;
-        q.push({0,{src,0}});
-        vector<int>dist(n,INT_MAX);
-        dist[src]=0;
+        vector<vector<int>>dist(n,vector<int>(k+2,INT_MAX));
+        priority_queue<pair<int,pair<int,int>>,vector<pair<int,pair<int,int>>>,greater<pair<int,pair<int,int>>>>pq;
+        pq.push({0,{src,0}});
+        dist[src][0]=0;
 
-        while(!q.empty())
+        while(!pq.empty())
         {
-            int stops=q.front().first;
-            int node=q.front().second.first;
-            int distance=q.front().second.second;
-            q.pop();
+            int distance=pq.top().first;
+            int stops=pq.top().second.second;
+            int node=pq.top().second.first;
+            pq.pop();
+
+             if(node==dst)
+            {
+                return distance;
+            }
 
             if(stops>k)
             {
                 continue;
             }
+            if(distance>dist[node][stops])
+            {
+                continue;
+            }
+           
 
             for(auto it:adj[node])
             {
-                if(it.second+distance<dist[it.first])
+                if(stops+1<=k+1 && it.second+distance<dist[it.first][stops+1])
                 {
-                    dist[it.first]=it.second+distance;
-                    q.push({stops+1,{it.first,dist[it.first]}});
+                    dist[it.first][stops+1]=it.second+distance;
+                    pq.push({dist[it.first][stops+1],{it.first,stops+1}});
                 }
             }
         }
-
-        return dist[dst]==INT_MAX ? -1:dist[dst];
+        return -1;
     }
 };
