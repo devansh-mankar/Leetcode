@@ -1,6 +1,6 @@
 class Solution {
 public:
-    long long mod=(int)1000000007;
+    int mod=1000000007;
     int countPaths(int n, vector<vector<int>>& roads) {
         vector<vector<pair<int,int>>>adj(n);
 
@@ -9,22 +9,22 @@ public:
             int u=it[0];
             int v=it[1];
             int wt=it[2];
-
             adj[u].push_back({v,wt});
             adj[v].push_back({u,wt});
         }
 
-        priority_queue<pair<long long ,int>,vector<pair<long long,int>>,greater<pair<long long,int>>>pq;
         vector<long long>dist(n,1e15);
         vector<int>ways(n,0);
 
+        priority_queue<pair<long long,int>,vector<pair<long long,int>>,greater<pair<long long,int>>>pq;
         pq.push({0,0});
         dist[0]=0;
         ways[0]=1;
+
         while(!pq.empty())
         {
-            long long distance=pq.top().first;
             int node=pq.top().second;
+            long long distance=pq.top().first;
             pq.pop();
 
             for(auto it:adj[node])
