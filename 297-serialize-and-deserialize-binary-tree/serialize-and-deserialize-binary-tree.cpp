@@ -52,7 +52,6 @@ public:
         string str;
 
         getline(s,str,',');
-
         TreeNode* root=new TreeNode(stoi(str));
         queue<TreeNode*>q;
         q.push(root);
@@ -82,6 +81,7 @@ public:
                 q.push(node->right);
             }
         }
+
 
         return root;
     }
