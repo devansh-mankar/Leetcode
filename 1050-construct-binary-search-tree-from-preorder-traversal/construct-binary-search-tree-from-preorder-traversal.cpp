@@ -11,25 +11,25 @@
  */
 class Solution {
 public:
-    TreeNode* solve(vector<int>&pre,int& index,int mini,int maxi)
+    TreeNode* solve(int& index,int mini,int maxi,vector<int>&pre)
     {
         if(index>=pre.size())
         {
             return NULL;
         }
-        if(pre[index]<=mini || pre[index]>=maxi)
+        if(pre[index]>=maxi || pre[index]<=mini)
         {
             return NULL;
         }
         TreeNode* temp=new TreeNode(pre[index++]);
-        temp->left=solve(pre,index,mini,temp->val);
-        temp->right=solve(pre,index,temp->val,maxi);
+        temp->left=solve(index,mini,temp->val,pre);
+        temp->right=solve(index,temp->val,maxi,pre);
         return temp;
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
         int index=0;
         int mini=INT_MIN;
         int maxi=INT_MAX;
-        return solve(preorder,index,mini,maxi);
+        return solve(index,mini,maxi,preorder);
     }
 };
