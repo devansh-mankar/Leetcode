@@ -35,13 +35,13 @@ public:
                 delete root;
                 return NULL;
             }
-           else if(!root->left && root->right)
+            else if(!root->left && root->right)
             {
                 TreeNode* temp=root->right;
                 delete root;
                 return temp;
             }
-           else if(root->left && !root->right)
+            else if(root->left && !root->right)
             {
                 TreeNode* temp=root->left;
                 delete root;
@@ -56,10 +56,10 @@ public:
         }
         else if(root->val>key)
         {
-            root->left=  deleteNode(root->left,key);
+            root->left=deleteNode(root->left,key);
         }
         else{
-            root->right=  deleteNode(root->right,key);
+            root->right=deleteNode(root->right,key);
         }
         return root;
     }
