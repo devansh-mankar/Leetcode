@@ -17,15 +17,12 @@ public:
         {
             return true;
         }
-        if(!p && q || !q && p)
+        if(!p && q|| !q && p)
         {
             return false;
         }
-        if(p->val!=q->val)
-        {
-            return false;
-        }
-        return solve(p->left,q->right) && solve(p->right,q->left);
+        return p->val==q->val && solve(p->left,q->right) && solve(p->right,q->left);
+
     }
     bool isSymmetric(TreeNode* root) {
         if(root==NULL)
