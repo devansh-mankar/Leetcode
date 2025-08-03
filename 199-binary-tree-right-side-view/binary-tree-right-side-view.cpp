@@ -11,37 +11,24 @@
  */
 class Solution {
 public:
-    vector<int> rightSideView(TreeNode* root) {
-        vector<int>ans;
+    void solve(TreeNode* root,vector<int>&view,int level)
+    {
         if(root==NULL)
         {
-            return ans;
+            return;
         }
-        map<int,int>mp;
-        queue<pair<TreeNode*,int>>q;
-        q.push({root,0});
-
-        while(!q.empty())
+        if(level==view.size())
         {
-            auto node=q.front().first;
-            int lvl=q.front().second;
-            q.pop();
-
-            mp[lvl]=node->val;
-            if(node->left)
-            {
-                q.push({node->left,lvl+1});
-            }
-            if(node->right)
-            {
-                q.push({node->right,lvl+1});
-            }
+            view.push_back(root->val);
         }
-
-        for(auto i:mp)
-        {
-            ans.push_back(i.second);
-        }
-        return ans;
+        solve(root->right,view,level+1);
+        solve(root->left,view,level+1);
+        
+        
+    }
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int>view;
+        solve(root,view,0);
+        return view;
     }
 };
