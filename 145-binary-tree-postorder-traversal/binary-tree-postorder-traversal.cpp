@@ -18,14 +18,13 @@ public:
             return ans;
         }
         stack<TreeNode*>s;
-        stack<TreeNode*>s1;
         s.push(root);
 
         while(!s.empty())
         {
             auto node=s.top();
             s.pop();
-            s1.push(node);
+            ans.push_back(node->val);
             if(node->left)
             {
                 s.push(node->left);
@@ -35,14 +34,7 @@ public:
                 s.push(node->right);
             }
         }
-
-
-        while(!s1.empty())
-        {
-            ans.push_back(s1.top()->val);
-            s1.pop();
-        }
-       
+        reverse(ans.begin(),ans.end());
         return ans;
     }
 };
