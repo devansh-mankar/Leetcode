@@ -11,14 +11,12 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root,string temp,vector<string>&ans)
+    void solve(TreeNode* root,vector<string>&ans,string temp)
     {
         if(root==NULL)
         {
             return;
         }
-        
-        
         if(!root->left && !root->right)
         {
             temp+=to_string(root->val);
@@ -27,17 +25,15 @@ public:
         }
         else{
             temp+=to_string(root->val)+"->";
+            
         }
-        solve(root->left,temp,ans);
-        solve(root->right,temp,ans);
-        
-        
+        solve(root->left,ans,temp);
+        solve(root->right,ans,temp);
     }
     vector<string> binaryTreePaths(TreeNode* root) {
         vector<string>ans;
         string temp="";
-        solve(root,temp,ans);
+        solve(root,ans,temp);
         return ans;
-
     }
 };
