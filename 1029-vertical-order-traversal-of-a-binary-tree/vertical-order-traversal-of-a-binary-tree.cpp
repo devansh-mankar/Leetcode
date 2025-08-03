@@ -19,30 +19,31 @@ public:
         }
         map<int,map<int,multiset<int>>>nodes;
         queue<pair<TreeNode*,pair<int,int>>>q;
+
         q.push({root,{0,0}});
 
         while(!q.empty())
         {
-            auto it=q.front();
+            auto node=q.front().first;
+            int hd=q.front().second.first;
+            int lvl=q.front().second.second;
             q.pop();
-            int hd=it.second.first;
-            int lvl=it.second.second;
-            nodes[hd][lvl].insert(it.first->val);
+            nodes[hd][lvl].insert(node->val);
 
-            if(it.first->left)
+            if(node->left)
             {
-                q.push({it.first->left,{hd-1,lvl+1}});
+                q.push({node->left,{hd-1,lvl+1}});
             }
-            if(it.first->right)
+            if(node->right)
             {
-                q.push({it.first->right,{hd+1,lvl+1}});
+                q.push({node->right,{hd+1,lvl+1}});
             }
         }
 
-        for(auto it:nodes)
+        for(auto i:nodes)
         {
             vector<int>temp;
-            for(auto j:it.second)
+            for(auto j:i.second)
             {
                 temp.insert(temp.end(),j.second.begin(),j.second.end());
             }
