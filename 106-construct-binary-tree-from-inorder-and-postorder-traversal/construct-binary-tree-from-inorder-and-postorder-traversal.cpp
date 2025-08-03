@@ -11,30 +11,35 @@
  */
 class Solution {
 public:
-    TreeNode* solve(vector<int>&post,unordered_map<int,int>&mp,int& index,int start,int end)
+    int findPos(int element,vector<int>&in)
     {
-        if(start>end || index<0)
+        for(int i=0;i<in.size();i++)
+        {
+            if(in[i]==element)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    TreeNode* solve(vector<int>&in,vector<int>&post,int& index,int start,int end,int n)
+    {
+        if(index<0 || start>end)
         {
             return NULL;
         }
         int element=post[index--];
-        int pos=mp[element];
+        int pos=findPos(element,in);
 
-        TreeNode* curr=new TreeNode(element);
-         curr->right=solve(post,mp,index,pos+1,end);
-        curr->left=solve(post,mp,index,start,pos-1);
-       
-        return curr;
-
+        TreeNode* temp=new TreeNode(element);
+        temp->right=solve(in,post,index,pos+1,end,n);
+        temp->left=solve(in,post,index,start,pos-1,n);
+        return temp;
     }
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        unordered_map<int,int>mp;
-        for(int i=0;i<inorder.size();i++)
-        {
-            mp[inorder[i]]=i;
-        }
-        int n=inorder.size();
+        int n=postorder.size();
         int index=n-1;
-        return solve(postorder,mp,index,0,n-1);
+        return solve(inorder,postorder,index,0,n-1,n);
+
     }
 };
