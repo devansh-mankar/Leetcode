@@ -38,12 +38,14 @@ public:
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         vector<int>ans;
         unordered_map<TreeNode*,TreeNode*>nodeToParent;
+
         findParent(root,nodeToParent);
 
         unordered_map<TreeNode*,int>vis;
+        vis[target]=true;
+
         queue<TreeNode*>q;
         q.push(target);
-        vis[target]=true;
 
         while(k--)
         {
@@ -70,7 +72,6 @@ public:
                 }
             }
         }
-
 
         while(!q.empty())
         {
