@@ -25,7 +25,6 @@ public:
         }
         else{
             temp+=to_string(root->val)+"->";
-            
         }
         solve(root->left,ans,temp);
         solve(root->right,ans,temp);
