@@ -12,8 +12,11 @@ public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
-        if(!root) return "";
-        string s="";
+        if(!root)
+        {
+            return "";
+        }
+        string str="";
         queue<TreeNode*>q;
         q.push(root);
 
@@ -22,33 +25,38 @@ public:
             auto node=q.front();
             q.pop();
 
-            if(node==NULL) s.append("#,");
-            else s.append(to_string(node->val)+',');
+            if(node==NULL)
+            {
+                str.append("#,");
+            }
+            else{
+                str.append(to_string(node->val)+',');
+            }
 
             if(node)
             {
                 q.push(node->left);
-            }
-            if(node)
-            {
                 q.push(node->right);
             }
         }
-        return s;
+        return str;
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        if(data.size()==0) return NULL;
-
+        if(data.size()==0)
+        {
+            return NULL;
+        }
         stringstream s(data);
         string str;
+
         getline(s,str,',');
 
-        queue<TreeNode*>q;
         TreeNode* root=new TreeNode(stoi(str));
-
+        queue<TreeNode*>q;
         q.push(root);
+
         while(!q.empty())
         {
             auto node=q.front();
@@ -60,9 +68,8 @@ public:
                 node->left=NULL;
             }
             else{
-                TreeNode* lnode=new TreeNode(stoi(str));
-                node->left=lnode;
-                q.push(lnode);
+                node->left=new TreeNode(stoi(str));
+                q.push(node->left);
             }
 
             getline(s,str,',');
@@ -71,11 +78,11 @@ public:
                 node->right=NULL;
             }
             else{
-                TreeNode* rnode=new TreeNode(stoi(str));
-                node->right=rnode;
-                q.push(rnode);
+                node->right=new TreeNode(stoi(str));
+                q.push(node->right);
             }
         }
+
         return root;
     }
 };
