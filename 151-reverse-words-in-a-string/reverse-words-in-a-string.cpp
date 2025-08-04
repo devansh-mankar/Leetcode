@@ -1,36 +1,22 @@
 class Solution {
 public:
     string reverseWords(string s) {
-        int n=s.size();
-        stack<string>st;
-        string temp="";
+        stringstream ss(s);
+        vector<string>words;
+        string word;
 
-        for(int i=0;i<n;i++)
+        while(ss>>word)
         {
-            if(s[i]==' ')
-            {
-                if(!temp.empty())
-                {
-                    st.push(temp);
-                    temp="";
-                }
-            }
-            else{
-                temp+=s[i];
-            }
+            words.push_back(word);
         }
-
-        if(!temp.empty())
-        {
-            st.push(temp);
-        }
+        reverse(words.begin(),words.end());
 
         string ans="";
-        while(!st.empty())
+        int n=words.size();
+        for(int i=0;i<n;i++)
         {
-            ans+=st.top();
-            st.pop();
-            if(!st.empty())
+            ans+=words[i];
+            if(i!=n-1)
             {
                 ans+=" ";
             }
