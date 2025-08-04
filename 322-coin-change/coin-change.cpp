@@ -8,8 +8,7 @@ public:
             {
                 return amount/coins[0];
             }
-            else
-            {
+            else{
                 return 1e9;
             }
         }
@@ -24,13 +23,11 @@ public:
             pick=1+solve(index,coins,amount-coins[index],dp);
         }
         return dp[index][amount]=min(pick,notpick);
-
     }
     int coinChange(vector<int>& coins, int amount) {
         int n=coins.size();
         vector<vector<int>>dp(n,vector<int>(amount+1,-1));
         int ans=solve(n-1,coins,amount,dp);
-
         if(ans>=1e9)
         {
             return -1;
