@@ -13,13 +13,15 @@ class Solution {
 public:
     void solve(TreeNode* root,vector<int>&in)
     {
-        if(!root) return ;
-
+        if(root==NULL)
+        {
+            return;
+        }
         solve(root->left,in);
         in.push_back(root->val);
         solve(root->right,in);
     }
-    TreeNode* build(TreeNode* root,vector<int>&in,int start,int end)
+    TreeNode* build(vector<int>&in,int start,int end)
     {
         if(start>end)
         {
@@ -27,18 +29,16 @@ public:
         }
         int mid=start+(end-start)/2;
         TreeNode* temp=new TreeNode(in[mid]);
-        temp->left=build(root,in,start,mid-1);
-        temp->right=build(root,in,mid+1,end);
+        temp->left=build(in,start,mid-1);
+        temp->right=build(in,mid+1,end);
         return temp;
     }
     TreeNode* balanceBST(TreeNode* root) {
-        if(root==NULL)
-        {
-            return NULL;
-        }
+        if(!root) return NULL;
         vector<int>in;
         solve(root,in);
         int n=in.size();
-        return build(root,in,0,n-1);
+
+        return build(in,0,n-1);
     }
 };
