@@ -4,21 +4,21 @@ public:
     {
         queue<int>q;
         q.push(node);
-        color[node]=0;
 
+        color[node]=0;
         while(!q.empty())
         {
-            int front=q.front();
+            int temp=q.front();
             q.pop();
 
-            for(auto it:graph[front])
+            for(auto it:graph[temp])
             {
                 if(color[it]==-1)
                 {
                     q.push(it);
-                    color[it]=!color[front];
+                    color[it]=!color[temp];
                 }
-                else if(color[it]==color[front])
+                else if(color[it]==color[temp])
                 {
                     return false;
                 }
@@ -28,7 +28,6 @@ public:
     }
     bool isBipartite(vector<vector<int>>& graph) {
         int n=graph.size();
-
         vector<int>color(n,-1);
 
         for(int i=0;i<n;i++)
