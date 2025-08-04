@@ -21,7 +21,8 @@ public:
         {
             return false;
         }
-        return solve(root->left,lb,root->val) && solve(root->right,root->val,ub);
+        return solve(root->left,lb,root->val) &&  solve(root->right,root->val,ub);
+       
     }
     bool isValidBST(TreeNode* root) {
         return solve(root,LONG_MIN,LONG_MAX);
