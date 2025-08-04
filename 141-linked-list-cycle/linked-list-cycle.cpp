@@ -10,7 +10,8 @@ class Solution {
 public:
     bool hasCycle(ListNode *head) {
         ListNode* temp=head;
-        map<ListNode*,bool>vis;
+
+        unordered_map<ListNode*,bool>vis;
 
         while(temp)
         {
@@ -22,5 +23,6 @@ public:
             temp=temp->next;
         }
         return false;
+        
     }
 };
