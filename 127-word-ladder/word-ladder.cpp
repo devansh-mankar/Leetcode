@@ -6,30 +6,30 @@ public:
 
         q.push({beginWord,1});
         dict.erase(beginWord);
-        
+
         while(!q.empty())
         {
             string word=q.front().first;
-            int len=q.front().second;
+            int steps=q.front().second;
             q.pop();
-
             if(word==endWord)
             {
-                return len;
+                return steps;
             }
-            for(int i=0;i<word.size();i++)
+
+            for(int j=0;j<word.size();j++)
             {
-                char ch=word[i];
-                for(int j=0;j<26;j++)
+                char ch=word[j];
+                for(int k=0;k<26;k++)
                 {
-                    word[i]='a'+j;
+                    word[j]='a'+k;
                     if(dict.find(word)!=dict.end())
                     {
-                        q.push({word,len+1});
+                        q.push({word,steps+1});
                         dict.erase(word);
                     }
                 }
-                word[i]=ch;
+                word[j]=ch;
             }
         }
         return 0;
