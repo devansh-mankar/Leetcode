@@ -4,8 +4,9 @@ public:
         public:
         int key;
         int val;
-        Node* prev;
         Node* next;
+        Node*prev;
+
         Node(int k,int v)
         {
             key=k;
@@ -13,14 +14,13 @@ public:
         }
     };
     int cap;
-    Node*  head=new Node(-1,-1);
+    Node* head=new Node(-1,-1);
     Node* tail=new Node(-1,-1);
     unordered_map<int,Node*>mp;
     LRUCache(int capacity) {
         cap=capacity;
         head->next=tail;
         tail->prev=head;
-
     }
 
     void insertFront(Node* node)
@@ -47,11 +47,9 @@ public:
             Node* node=mp[key];
             deleteLast(node);
             insertFront(node);
-             return node->val;
-
+            return node->val;
         }
         return -1;
-       
     }
     
     void put(int key, int value) {
