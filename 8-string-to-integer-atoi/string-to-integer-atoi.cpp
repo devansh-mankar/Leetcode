@@ -10,7 +10,7 @@ public:
         {
             i++;
         }
-        if(i<n && (s[i]=='-' || s[i]=='+'))
+        if(i<n && (s[i]=='+' || s[i]=='-'))
         {
             negative=(s[i]=='-');
             i++;
@@ -24,7 +24,7 @@ public:
             }
             i++;
         }
-
         return negative?-ans:ans;
+
     }
 };
