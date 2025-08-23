@@ -1,25 +1,23 @@
 class Solution {
 public:
     int mod=1e9+7;
-    long long solve(int x,long long n)
+    long long solve(long long n)
     {
-        x=2;
-        if(n==0)
-        {
-            return 1;
-        }
         long long ans=1;
-        ans=(solve(2,n/2))%mod;
-        ans=(ans*ans)%mod;
-
-        if(n%2)
+        long long base=2;
+        while(n)
         {
-            ans=(2*ans)%mod;
+            if(n%2)
+            {
+                ans=(ans*base)%mod;
+            }
+            base=(base*base)%mod;
+            n=n/2;
         }
         return ans;
     }
     int monkeyMove(int n) {
-        long long ans=solve(2,n)%mod;
+        long long ans=solve(n);
         return (ans-2+mod)%mod;
     }
 };
