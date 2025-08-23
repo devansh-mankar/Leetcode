@@ -13,9 +13,8 @@ public:
         return solve(i+1,s,negative,ans*10+s[i]-'0');
     }
     int myAtoi(string s) {
-        int i=0;
-        
         int n=s.size();
+        int i=0;
         bool negative=false;
 
         while(i<n && s[i]==' ')
