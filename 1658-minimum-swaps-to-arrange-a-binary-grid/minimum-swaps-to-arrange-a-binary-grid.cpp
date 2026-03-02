@@ -3,7 +3,6 @@ public:
     int minSwaps(vector<vector<int>>& grid) {
         int n=grid.size();
 
-        //find trailing zeros in each row
         vector<int>trailing(n);
 
         for(int i=0;i<n;i++)
@@ -12,7 +11,7 @@ public:
             for(int j=n-1;j>=0;j--)
             {
                 if(grid[i][j]==0) count++;
-                else break; //no trailing zeros
+                else break;
             }
             trailing[i]=count;
         }
@@ -33,7 +32,7 @@ public:
 
             while(j>i)
             {
-                swap(trailing[j],trailing[j-1]);
+                swap(trailing[j-1],trailing[j]);
                 swaps++;
                 j--;
             }
