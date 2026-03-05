@@ -3,7 +3,6 @@ public:
     char findKthBit(int n, int k) {
         if(n==1)
         {
-            //s1 is zero
             return '0';
         }
 
@@ -14,6 +13,6 @@ public:
         if(k<mid) return findKthBit(n-1,k);
 
         char c=findKthBit(n-1,len-k+1);
-        return c=='0'? '1':'0';
+        return c=='0'?'1':'0';
     }
 };
