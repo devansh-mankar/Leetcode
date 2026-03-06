@@ -3,12 +3,21 @@ public:
     int minOperations(string s) {
         int n=s.size();
 
-        int count=0;
+        int curr1=0,curr2=0;
+
         for(int i=0;i<n;i++)
         {
-            count+=(s[i]^i)&1;
+            if(i%2==0 && s[i]!='0') curr1++;
+            if(i%2!=0 && s[i]!='1') curr1++;
         }
 
-        return min(count,n-count);
+
+        for(int i=0;i<n;i++)
+        {
+            if(i%2==0 && s[i]!='1') curr2++;
+            if(i%2!=0 && s[i]!='0') curr2++;
+        }
+
+        return min(curr1,curr2);
     }
 };
