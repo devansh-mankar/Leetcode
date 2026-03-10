@@ -3,11 +3,13 @@ public:
     bool checkOnesSegment(string s) {
         int n=s.size();
 
-        int i0=s.find('0');
-        if(i0==-1) return 1;
-
-        int i1=s.find_last_of('1');
-
-        return i0>i1;
+        for(int i=1;i<n-1;i++)
+        {
+            if(s[i]=='0' && s[i+1]=='1')
+            {
+                return false;
+            }
+        }
+        return true; 
     }
 };
