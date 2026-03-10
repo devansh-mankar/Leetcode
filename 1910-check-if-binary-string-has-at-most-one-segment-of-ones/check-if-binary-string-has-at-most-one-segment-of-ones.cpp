@@ -1,15 +1,12 @@
 class Solution {
 public:
     bool checkOnesSegment(string s) {
-        int n=s.size();
+        int i0=0,i1=0;
 
-        for(int i=1;i<n-1;i++)
-        {
-            if(s[i]=='0' && s[i+1]=='1')
-            {
-                return false;
-            }
-        }
-        return true; 
+        i0=s.find('0');
+        if(i0==-1) return 1;
+
+        i1=s.find_last_of('1');
+        return i0>i1;
     }
 };
