@@ -2,12 +2,15 @@ class Solution {
 public:
     int singleNumber(vector<int>& nums) {
         int n=nums.size();
-        int xorr=0;
+        sort(nums.begin(),nums.end());
 
-        for(int i=0;i<n;i++)
+        for(int i=1;i<n;i+=2)
         {
-            xorr=xorr^nums[i];
+            if(nums[i]!=nums[i-1])
+            {
+                return nums[i-1];
+            }
         }
-        return xorr;
+        return nums[n-1];
     }
 };
