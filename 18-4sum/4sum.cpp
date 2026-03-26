@@ -2,53 +2,28 @@ class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
         int n=nums.size();
-        sort(nums.begin(),nums.end());
-        set<vector<int>>st;
+
+        set<vector<int>>s;
 
         for(int i=0;i<n;i++)
         {
-            if(i!=0 && nums[i]==nums[i-1])
-            {
-                continue;
-            }
             for(int j=i+1;j<n;j++)
             {
-                if(j>i+1 && nums[j]==nums[j-1])
+                unordered_map<long long,int>mp;
+                for(int k=j+1;k<n;k++)
                 {
-                    continue;
-                }
-                int k=j+1;
-                int l=n-1;
-                while(k<l)
-                {
-                    long long int a=nums[i];
-                    long long int b=nums[j];
-                    long long int c=nums[k];
-                    long long int d=nums[l];
-                    long long int sum=a+b+c+d;
-                    if(sum<target)
+                    long long num=(long long)target-((long long)nums[i]+nums[j]+nums[k]);
+                    if(mp.find(num)!=mp.end())
                     {
-                        k++;
+                        vector<int>temp={nums[i],nums[j],nums[k],nums[mp[num]]};
+                        sort(temp.begin(),temp.end());
+                        s.insert(temp);
                     }
-                    else if(sum>target)
-                    {
-                        l--;
-                    }
-                    else
-                    {
-                        vector<int>temp={nums[i],nums[j],nums[k],nums[l]};
-                        st.insert(temp);
-                        k++;
-                        l--;
-
-                        while (k < l && nums[k] == nums[k - 1]) k++;
-                    while (k < l && nums[l] == nums[l + 1]) l--;
-                        
-                    }
+                    mp[nums[k]]=k;
                 }
             }
         }
-        vector<vector<int>>ans(st.begin(),st.end());
+        vector<vector<int>>ans(s.begin(),s.end());
         return ans;
     }
 };
