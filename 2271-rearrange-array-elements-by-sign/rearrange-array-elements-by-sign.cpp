@@ -12,17 +12,16 @@ public:
             {
                 neg.push_back(nums[i]);
             }
-            else
-            {
+            else{
                 pos.push_back(nums[i]);
             }
         }
 
-        for(int i=0;i<n/2;i++)
-        {
-            nums[2*i]=pos[i];
-            nums[2*i+1]=neg[i];
-        }
-        return nums;
+      for(int i=0;i<n/2;i++)
+      {
+            nums[i*2]=pos[i];
+            nums[i*2+1]=neg[i];
+      }   
+      return nums;
     }
 };
