@@ -4,29 +4,63 @@ public:
         int n=matrix.size();
         int m=matrix[0].size();
 
-        vector<int>row(n,0);
-        vector<int>col(m,0);
+        bool firstRow=false;
+        bool firstCol=false;
 
         for(int i=0;i<n;i++)
         {
-            for(int j=0;j<m;j++)
+            if(matrix[i][0]==0)
+            {
+                firstCol=true;
+                break;
+            }
+        }
+
+        for(int i=0;i<m;i++)
+        {
+            if(matrix[0][i]==0)
+            {
+                firstRow=true;
+                break;
+            }
+        }
+
+        for(int i=1;i<n;i++)
+        {
+            for(int j=1;j<m;j++)
             {
                 if(matrix[i][j]==0)
                 {
-                    row[i]=1;
-                    col[j]=1;
+                    matrix[i][0]=0;
+                    matrix[0][j]=0;
                 }
             }
         }
 
-        for(int i=0;i<n;i++)
+        for(int i=1;i<n;i++)
         {
-            for(int j=0;j<m;j++)
+            for(int j=1;j<m;j++)
             {
-                if(row[i] || col[j])
+                if(matrix[i][0]==0 || matrix[0][j]==0)
                 {
                     matrix[i][j]=0;
                 }
+            }
+        }
+
+        if(firstRow)
+        {
+            for(int i=0;i<m;i++)
+            {
+                matrix[0][i]=0;
+            }
+        }
+
+        if(firstCol)
+        {
+            for(int i=0;i<n;i++)
+            {
+                matrix[i][0]=0;
             }
         }
     }
