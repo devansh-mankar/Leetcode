@@ -3,14 +3,14 @@ public:
     int minEatingSpeed(vector<int>& piles, int h) {
         int n=piles.size();
 
-        int maxi=*max_element(piles.begin(),piles.end());
+        int high=*max_element(piles.begin(),piles.end());
 
-        long long low=1;
-        long long high=maxi;
+        int low=1;
+       
 
         while(low<=high)
         {
-            long long mid=low+(high-low)/2;
+            int mid=low+(high-low)/2;
             long long hours=0;
             for(int i=0;i<n;i++)
             {
