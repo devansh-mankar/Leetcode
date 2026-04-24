@@ -14,7 +14,7 @@ public:
             long long hours=0;
             for(int i=0;i<n;i++)
             {
-                hours+=(ceil)((double)piles[i]/(double)mid);
+                hours+=(piles[i]+mid-1)/mid;
             }
             if(hours<=h)
             {
