@@ -4,44 +4,38 @@ public:
         int n1=nums1.size();
         int n2=nums2.size();
 
-        if(n1>n2)
-        {
-            return findMedianSortedArrays(nums2,nums1);
-        }
+        vector<int>temp;
 
         int n=n1+n2;
-        int low=0;
-        int high=n1;
 
-        while(low<=high)
+        int i=0;
+        int j=0;
+
+        while(i<n1 && j<n2)
         {
-            int mid1=low+(high-low)/2;
-            int mid2=(n1+n2+1)/2-mid1;
-
-            int l1= mid1==0 ? INT_MIN : nums1[mid1-1];
-            int l2= mid2==0 ? INT_MIN : nums2[mid2-1];
-
-            int r1= mid1==n1 ? INT_MAX : nums1[mid1];
-            int r2= mid2==n2 ? INT_MAX : nums2[mid2];
-
-            if(l1<=r2 && l2<=r1)
+            if(nums1[i]<nums2[j])
             {
-                if((n%2)==1)
-                {
-                    return (double)max(l1,l2);
-                }
-                else{
-                    return (double)(max(l1,l2)+min(r1,r2))/2.0;
-                }
-            }
-            else if(l1>r2)
-            {
-                high=mid1-1;
+                temp.push_back(nums1[i++]);
             }
             else{
-                low=mid1+1;
+                temp.push_back(nums2[j++]);
             }
         }
-        return 0;
+
+        while(i<n1)
+        {
+            temp.push_back(nums1[i++]);
+        }
+
+        while(j<n2)
+        {
+            temp.push_back(nums2[j++]);
+        }
+
+        if(n%2==1)
+        {
+            return (double)temp[n/2];
+        }
+        return ((double)temp[n/2]+(double)temp[n/2-1])/2.0;
     }
 };
