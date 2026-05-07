@@ -4,30 +4,17 @@ public:
         int n=matrix.size();
         int m=matrix[0].size();
 
-        int low=0;
-        int high=n*m-1;
-
-
-        while(low<=high)
+        for(int i=0;i<n;i++)
         {
-            int mid=low+(high-low)/2;
-            int row=mid/m;
-            int col=mid%m;
-
-            if(matrix[row][col]==target)
+            for(int j=0;j<m;j++)
             {
-                return true;
-                break;
-            }
-            else if(matrix[row][col]>target)
-            {
-                high=mid-1;
-            }
-            else{
-                low=mid+1;
+                if(matrix[i][j]==target)
+                {
+                    return true;
+                    break;
+                }
             }
         }
         return false;
-
     }
 };
