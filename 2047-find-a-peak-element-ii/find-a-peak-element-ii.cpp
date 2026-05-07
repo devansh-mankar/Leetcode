@@ -2,7 +2,7 @@ class Solution {
 public:
     int maxElement(vector<vector<int>>&mat,int col)
     {
-        int maxi=INT_MIN;
+        int maxi=-1;
         int index=-1;
         int n=mat.size();
 
@@ -26,16 +26,16 @@ public:
         while(low<=high)
         {
             int mid=low+(high-low)/2;
-
             int row=maxElement(mat,mid);
-            int left= mid-1>=0 ? mat[row][mid-1] : -1;
-            int right= mid+1<m ? mat[row][mid+1] : -1;
+
+            int left= mid-1>=0 ? mat[row][mid-1]: INT_MIN;
+            int right=mid+1<m ? mat[row][mid+1] : INT_MIN;
 
             if(mat[row][mid]>left && mat[row][mid]>right)
             {
                 return {row,mid};
             }
-            else if(mat[row][mid]<left)
+            else if(left>mat[row][mid])
             {
                 high=mid-1;
             }
