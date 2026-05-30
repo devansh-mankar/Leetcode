@@ -2,17 +2,17 @@ class Solution {
 public:
     vector<int> singleNumber(vector<int>& nums) {
         int n=nums.size();
-        long long xorr=0;
 
+        long long xorr=0;
         for(int i=0;i<n;i++)
         {
             xorr=xorr^nums[i];
         }
 
         long long rightmost=xorr&(-xorr);
-
         int xorr1=0;
         int xorr2=0;
+
         for(int i=0;i<n;i++)
         {
             if(rightmost&nums[i])
