@@ -1,30 +1,31 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        string news;
-        for(int i=0;i<s.size();i++)
+        int n=s.size();
+
+        string temp="";
+
+        for(int i=0;i<n;i++)
         {
             if(s[i]>=65 && s[i]<=90)
             {
-                news.push_back(s[i]+32);
+                temp+=(s[i]+32);
             }
-            if(s[i]>=97 && s[i]<=122)
+            else if(s[i]>='0' && s[i]<='9')
             {
-                news.push_back(s[i]);
+                temp+=s[i];
             }
-            if(s[i]>='0' && s[i]<='9')
-            {
-                news.push_back(s[i]);
+            else if(s[i]>='a' && s[i]<='z'){
+                temp+=s[i];
             }
         }
 
-        int i=0,j=news.size()-1;
+        int i=0,j=temp.size()-1;
         while(i<=j)
         {
-            if(news[i++]!=news[j--])
+            if(temp[i++]!=temp[j--])
             {
                 return false;
-                break;
             }
         }
         return true;
