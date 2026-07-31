@@ -3,30 +3,25 @@ public:
     bool isPalindrome(string s) {
         int n=s.size();
 
-        string temp="";
+        int i=0,j=n-1;
 
-        for(int i=0;i<n;i++)
+        while(i<j)
         {
-            if(s[i]>=65 && s[i]<=90)
+            while(i<j && !isalnum(s[i]))
             {
-                temp+=(s[i]+32);
+                i++;
             }
-            else if(s[i]>='0' && s[i]<='9')
+            while(i<j && !isalnum(s[j]))
             {
-                temp+=s[i];
+                j--;
             }
-            else if(s[i]>='a' && s[i]<='z'){
-                temp+=s[i];
-            }
-        }
 
-        int i=0,j=temp.size()-1;
-        while(i<=j)
-        {
-            if(temp[i++]!=temp[j--])
+            if(tolower(s[i])!=tolower(s[j]))
             {
                 return false;
             }
+            i++;
+            j--;
         }
         return true;
     }
