@@ -6,7 +6,6 @@ public:
             return 0;
         }
         long long rev=0;
-
         int num=x;
 
         while(x)
