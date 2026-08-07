@@ -3,10 +3,17 @@ public:
     int missingNumber(vector<int>& nums) {
         int n=nums.size();
 
-        int sum=n*(n+1)/2;
+        unordered_map<int,int>mp;
 
-        int res=accumulate(nums.begin(),nums.end(),0);
+        for(int i=0;i<n;i++)
+        {
+            mp[nums[i]]++;
+        }
 
-        return sum-res;
+        for(int i=0;i<=n;i++)
+        {
+            if(!mp[i]) return i;
+        }
+        return n;
     }
 };
