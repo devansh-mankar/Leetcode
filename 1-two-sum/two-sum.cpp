@@ -3,17 +3,18 @@ public:
     vector<int> twoSum(vector<int>& nums, int target) {
         int n=nums.size();
 
+        unordered_map<int,int>mp;
+
         for(int i=0;i<n;i++)
         {
-            for(int j=0;j<n;j++)
-            {
-                if(i==j) continue;
+            int num=nums[i];
+            int rem=target-num;
 
-                if(nums[i]+nums[j]==target)
-                {
-                    return {i,j};
-                }
+            if(mp.find(rem)!=mp.end())
+            {
+                return {i,mp[rem]};
             }
+            mp[num]=i;
         }
         return {-1,-1};
     }
