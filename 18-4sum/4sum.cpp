@@ -1,46 +1,98 @@
 class Solution {
 public:
-    vector<vector<int>> fourSum(vector<int>& nums, int target) {
-        int n=nums.size();
+    void nsum(vector<int>& nums,
+              int n,
+              int l,
+              int r,
+              vector<int>& path,
+              vector<vector<int>>& ans,
+              long long target)
+    {
+        // Not enough elements
+        if (r - l + 1 < n)
+            return;
 
-        sort(nums.begin(),nums.end());
+        // Pruning
+        if (1LL * nums[l] * n > target)
+            return;
 
-        vector<vector<int>>ans;
+        if (1LL * nums[r] * n < target)
+            return;
 
-        for(int i=0;i<n;i++)
+        // Base case: 2-Sum
+        if (n == 2)
         {
-            if(i>0 && nums[i]==nums[i-1]) continue;
-
-            for(int j=i+1;j<n;j++)
+            while (l < r)
             {
-                if(j>i+1 && nums[j]==nums[j-1]) continue;
+                long long sum = 1LL * nums[l] + nums[r];
 
-                int left=j+1;
-                int right=n-1;
-                while(left<right)
+                if (sum == target)
                 {
-                    long long num=1LL*target-nums[i]-nums[j];
-                    long long sum=nums[left]+nums[right];
+                    path.push_back(nums[l]);
+                    path.push_back(nums[r]);
 
-                    if(sum==num)
-                    {
-                        ans.push_back({nums[i],nums[j],nums[left],nums[right]});
-                        while(left<right && nums[left]==nums[left+1]) left++;
-                        while(left<right && nums[right]==nums[right-1]) right--;
+                    ans.push_back(path);
 
-                        left++;
-                        right--;
-                    }
-                    else if(sum>num)
-                    {
-                        right--;
-                    }
-                    else{
-                        left++;
-                    }
+                    path.pop_back();
+                    path.pop_back();
+
+                    int leftVal = nums[l];
+                    int rightVal = nums[r];
+
+                    while (l < r && nums[l] == leftVal)
+                        l++;
+
+                    while (l < r && nums[r] == rightVal)
+                        r--;
+                }
+                else if (sum < target)
+                {
+                    l++;
+                }
+                else
+                {
+                    r--;
                 }
             }
+
+            return;   // VERY IMPORTANT
         }
+
+        // Reduce N-Sum -> (N-1)-Sum
+        for (int i = l; i <= r - n + 1; i++)
+        {
+            if (i > l && nums[i] == nums[i - 1])
+                continue;
+
+            path.push_back(nums[i]);
+
+            nsum(nums,
+                 n - 1,
+                 i + 1,
+                 r,
+                 path,
+                 ans,
+                 target - nums[i]);
+
+            path.pop_back();
+        }
+    }
+
+    vector<vector<int>> fourSum(vector<int>& nums, int target)
+    {
+        sort(nums.begin(), nums.end());
+
+        vector<vector<int>> ans;
+        vector<int> path;
+
+        nsum(nums,
+             4,
+             0,
+             nums.size() - 1,
+             path,
+             ans,
+             1LL * target);
+
         return ans;
     }
 };
