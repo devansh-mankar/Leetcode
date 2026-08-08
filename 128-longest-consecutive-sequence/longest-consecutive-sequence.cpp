@@ -1,11 +1,12 @@
 class Solution {
 public:
     int longestConsecutive(vector<int>& nums) {
-
         int n=nums.size();
-        if(n==0) return 0;
+
         sort(nums.begin(),nums.end());
-        
+
+        if(n==0) return 0;
+
         int index=1;
         int maxi=1;
 
@@ -18,6 +19,7 @@ public:
             }
             else if(abs(nums[i]-nums[i+1])==0)
             {
+                //to skip duplicates
                 continue;
             }
             else{
