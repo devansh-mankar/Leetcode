@@ -3,29 +3,41 @@ public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
         int n=nums.size();
 
-        set<vector<int>>s;
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>ans;
 
         for(int i=0;i<n;i++)
         {
-           
+            if(i>0 && nums[i]==nums[i-1]) continue;
             for(int j=i+1;j<n;j++)
             {
-                
-                unordered_map<long long,int>mp;
-                for(int k=j+1;k<n;k++)
+                if(j>i+1 && nums[j]==nums[j-1]) continue;
+
+                int left=j+1;
+                int right=n-1;
+                while(left<right)
                 {
-                    long long num=1LL*target-nums[i]-nums[j]-nums[k];
-                    if(mp.find(num)!=mp.end())
+                    long long num=1LL*target-nums[i]-nums[j];
+                    long long sum=1LL*nums[left]+nums[right];
+                    if(sum==num)
                     {
-                        vector<int>temp={nums[i],nums[j],nums[k],nums[mp[num]]};
-                        sort(temp.begin(),temp.end());
-                        s.insert(temp);
+                        ans.push_back({nums[i],nums[j],nums[left],nums[right]});
+                        while(left<right && nums[left]==nums[left+1]) left++;
+                        while(left<right && nums[right]==nums[right-1]) right--;
+
+                        left++;
+                        right--;
                     }
-                    mp[nums[k]]=k;
+                    else if(sum>num)
+                    {
+                        right--;
+                    }
+                    else{
+                        left++;
+                    }
                 }
             }
         }
-        vector<vector<int>>ans(s.begin(),s.end());
         return ans;
     }
 };
