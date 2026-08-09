@@ -5,9 +5,9 @@ public:
         int m=matrix[0].size();
 
         int top=0;
-        int bottom=n-1;
         int left=0;
         int right=m-1;
+        int bottom=n-1;
 
         vector<int>ans;
 
@@ -28,7 +28,7 @@ public:
                 for(int i=right;i>=left;i--)
                 {
                     ans.push_back(matrix[bottom][i]);
-                }   
+                }
                 bottom--;
             }
             if(left<=right)
@@ -39,6 +39,7 @@ public:
                 }
                 left++;
             }
+
         }
         return ans;
     }
