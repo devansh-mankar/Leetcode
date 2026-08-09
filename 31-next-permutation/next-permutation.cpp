@@ -4,7 +4,7 @@ public:
         int n=nums.size();
 
         int index=-1;
-
+        //finding the break point
         for(int i=n-2;i>=0;i--)
         {
             if(nums[i+1]>nums[i])
@@ -28,6 +28,7 @@ public:
                 break;
             }
         }
+
         reverse(nums.begin()+index+1,nums.end());
     }
 };
