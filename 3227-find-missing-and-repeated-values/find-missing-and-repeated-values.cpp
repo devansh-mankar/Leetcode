@@ -3,13 +3,13 @@ public:
     vector<int> findMissingAndRepeatedValues(vector<vector<int>>& grid) {
         int n=grid.size();
 
-        vector<int>temp;
-        
+        unordered_map<int,int>mp;
+
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<n;j++)
             {
-                temp.push_back(grid[i][j]);
+                mp[grid[i][j]]++;
             }
         }
 
@@ -18,19 +18,11 @@ public:
 
         for(int i=1;i<=n*n;i++)
         {
-            int count=0;
-            for(int j=0;j<n*n;j++)
-            {
-                if(i==temp[j])
-                {
-                    count++;
-                }
-            }
-            if(count==2)
+            if(mp[i]==2)
             {
                 repeating=i;
             }
-            else if(count==0)
+            else if(mp[i]==0)
             {
                 missing=i;
             }
@@ -39,6 +31,7 @@ public:
                 return {repeating,missing};
             }
         }
+
         return {-1,-1};
     }
 };
