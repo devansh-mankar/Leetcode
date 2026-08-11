@@ -1,9 +1,13 @@
 class Solution {
 public:
-    int countPairs(vector<int>&nums,int low,int mid,int high)
+    
+    int merge(vector<int>&nums,int low,int mid,int high)
     {
+        vector<int>temp;
+        int left=low;
         int right=mid+1;
         int count=0;
+
         for(int i=low;i<=mid;i++)
         {
             while(right<=high && nums[i]>2LL*nums[right])
@@ -12,13 +16,8 @@ public:
             }
             count+=(right-(mid+1));
         }
-        return count;
-    }
-    void merge(vector<int>&nums,int low,int mid,int high)
-    {
-        vector<int>temp;
-        int left=low;
-        int right=mid+1;
+        right=mid+1;
+
 
         while(left<=mid && right<=high)
         {
@@ -44,6 +43,7 @@ public:
         {
             nums[i]=temp[i-low];
         }
+        return count;
     }
     int mergeSort(vector<int>&nums,int low,int high)
     {
@@ -53,8 +53,8 @@ public:
 
         count+=mergeSort(nums,low,mid);
         count+=mergeSort(nums,mid+1,high);
-        count+=countPairs(nums,low,mid,high);
-        merge(nums,low,mid,high);
+        //count+=countPairs(nums,low,mid,high);
+        count+=merge(nums,low,mid,high);
 
         return count;
     }
