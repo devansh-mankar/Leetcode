@@ -1,11 +1,24 @@
 class Solution {
 public:
-    void merge(int low,int mid,int high,vector<int>&nums)
+    int countPairs(vector<int>&nums,int low,int mid,int high)
     {
-        int n=nums.size();
+        int right=mid+1;
+        int count=0;
+        for(int i=low;i<=mid;i++)
+        {
+            while(right<=high && nums[i]>2LL*nums[right])
+            {
+                right++;
+            }
+            count+=(right-(mid+1));
+        }
+        return count;
+    }
+    void merge(vector<int>&nums,int low,int mid,int high)
+    {
+        vector<int>temp;
         int left=low;
         int right=mid+1;
-        vector<int>temp;
 
         while(left<=mid && right<=high)
         {
@@ -13,8 +26,7 @@ public:
             {
                 temp.push_back(nums[left++]);
             }
-            else
-            {
+            else{
                 temp.push_back(nums[right++]);
             }
         }
@@ -33,36 +45,21 @@ public:
             nums[i]=temp[i-low];
         }
     }
-    int countPairs(int low,int mid,int high,vector<int>&nums)
+    int mergeSort(vector<int>&nums,int low,int high)
     {
-        int right=mid+1;
+        if(low>=high) return 0;
         int count=0;
-        for(int i=low;i<=mid;i++)
-        {
-            while(right<=high && nums[i]>2*(long long)nums[right])
-            {
-                right++;
-            }
-            count+=(right-(mid+1));
-        }
+        int mid=low+(high-low)/2;
+
+        count+=mergeSort(nums,low,mid);
+        count+=mergeSort(nums,mid+1,high);
+        count+=countPairs(nums,low,mid,high);
+        merge(nums,low,mid,high);
+
         return count;
     }
-    int mergeSort(int s,int e,vector<int>&nums)
-    {
-        int cnt=0;
-        if(s>=e)
-        {
-            return cnt;
-        }
-        int mid=s+(e-s)/2;
-        cnt+=mergeSort(s,mid,nums);
-        cnt+=mergeSort(mid+1,e,nums);
-        cnt+=countPairs(s,mid,e,nums);
-        merge(s,mid,e,nums);
-        return cnt;
-    }
     int reversePairs(vector<int>& nums) {
-     int n=nums.size();
-    return mergeSort(0,n-1,nums);   
+        int n=nums.size();
+        return mergeSort(nums,0,n-1);
     }
 };
