@@ -1,13 +1,11 @@
 class Solution {
 public:
-    
     int merge(vector<int>&nums,int low,int mid,int high)
     {
-        vector<int>temp;
         int left=low;
         int right=mid+1;
-        int count=0;
 
+        int count=0;
         for(int i=low;i<=mid;i++)
         {
             while(right<=high && nums[i]>2LL*nums[right])
@@ -16,8 +14,9 @@ public:
             }
             count+=(right-(mid+1));
         }
-        right=mid+1;
 
+        right=mid+1;
+        vector<int>temp;
 
         while(left<=mid && right<=high)
         {
@@ -34,6 +33,7 @@ public:
         {
             temp.push_back(nums[left++]);
         }
+
         while(right<=high)
         {
             temp.push_back(nums[right++]);
@@ -43,17 +43,19 @@ public:
         {
             nums[i]=temp[i-low];
         }
+
         return count;
     }
     int mergeSort(vector<int>&nums,int low,int high)
     {
-        if(low>=high) return 0;
+        if(low>=high)
+        {
+            return 0;
+        }
         int count=0;
         int mid=low+(high-low)/2;
-
         count+=mergeSort(nums,low,mid);
         count+=mergeSort(nums,mid+1,high);
-        //count+=countPairs(nums,low,mid,high);
         count+=merge(nums,low,mid,high);
 
         return count;
