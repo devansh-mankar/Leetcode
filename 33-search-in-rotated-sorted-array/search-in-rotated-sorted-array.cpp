@@ -13,6 +13,7 @@ public:
             {
                 return mid;
             }
+            //if left part is sorted
             else if(nums[low]<=nums[mid])
             {
                 if(nums[low]<=target && nums[mid]>=target)
@@ -23,6 +24,7 @@ public:
                     low=mid+1;
                 }
             }
+            //if right part is sorted
             else{
                 if(nums[mid]<=target && nums[high]>=target)
                 {
