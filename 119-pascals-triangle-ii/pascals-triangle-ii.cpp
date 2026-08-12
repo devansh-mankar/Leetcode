@@ -1,21 +1,16 @@
 class Solution {
 public:
-    int solve(int n,int r)
-    {
-        long long res=1;
-        for(int i=0;i<r;i++)
-        {
-            res=res*(n-i);
-            res/=(i+1);
-        }
-        return res;
-    }
     vector<int> getRow(int rowIndex) {
         vector<int>ans;
+        long long prev=1;
+        ans.push_back(1);
 
-        for(int i=0;i<=rowIndex;i++)
+        for(int i=1;i<=rowIndex;i++)
         {
-            ans.push_back(solve(rowIndex,i));
+            long long next=prev*(rowIndex-i+1);
+            next/=i;
+            ans.push_back(next);
+            prev=next;
         }
         return ans;
     }
