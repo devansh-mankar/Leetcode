@@ -7,7 +7,8 @@ public:
 
         for(int i=1;i<=rowIndex;i++)
         {
-            long long next=prev*(rowIndex-i+1)/i;
+            long long next=prev*(rowIndex-i+1);
+            next/=i;
             ans.push_back(next);
             prev=next;
         }
