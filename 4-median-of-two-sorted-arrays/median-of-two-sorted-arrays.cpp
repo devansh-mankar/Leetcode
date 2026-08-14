@@ -17,10 +17,10 @@ public:
             int mid1=low+(high-low)/2;
             int mid2=left-mid1;
 
-            int r1=INT_MAX;
-            int r2=INT_MAX;
             int l1=INT_MIN;
             int l2=INT_MIN;
+            int r1=INT_MAX;
+            int r2=INT_MAX;
 
             if(mid1<n1) r1=nums1[mid1];
             if(mid2<n2) r2=nums2[mid2];
@@ -39,7 +39,6 @@ public:
             else{
                 low=mid1+1;
             }
-            
         }
         return 0;
     }
