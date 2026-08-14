@@ -1,54 +1,46 @@
 class Solution {
 public:
     double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int n=nums1.size();
-        int m=nums2.size();
+        int n1=nums1.size();
+        int n2=nums2.size();
 
-        int ind1=(n+m)/2;
-        int ind2=ind1-1;
-        int ele1=-1;
-        int ele2=-1;
-        int count=0;
-        
+        if(n1>n2) return findMedianSortedArrays(nums2,nums1);
 
-        int i=0,j=0;
-        while(i<n && j<m)
+        int n=(n1+n2);
+        int left=(n+1)/2;
+
+        int low=0;
+        int high=n1;
+
+        while(low<=high)
         {
-            if(nums1[i]<=nums2[j])
+            int mid1=low+(high-low)/2;
+            int mid2=left-mid1;
+
+            int r1=INT_MAX;
+            int r2=INT_MAX;
+            int l1=INT_MIN;
+            int l2=INT_MIN;
+
+            if(mid1<n1) r1=nums1[mid1];
+            if(mid2<n2) r2=nums2[mid2];
+            if(mid1-1>=0) l1=nums1[mid1-1];
+            if(mid2-1>=0) l2=nums2[mid2-1];
+
+            if(l1<=r2 && l2<=r1)
             {
-                if(count==ind1) ele1=nums1[i];
-                if(count==ind2) ele2=nums1[i];
-                count++;
-                i++;
+                if(n%2==1) return (double)max(l1,l2);
+                else return (double)(max(l1,l2)+min(r1,r2))/2;
+            }
+            else if(l1>r2)
+            {
+                high=mid1-1;
             }
             else{
-                if(count==ind1) ele1=nums2[j];
-                if(count==ind2) ele2=nums2[j];
-                count++;
-                j++;
+                low=mid1+1;
             }
+            
         }
-
-        while(i<n)
-        {
-            if(count==ind1) ele1=nums1[i];
-            if(count==ind2) ele2=nums1[i];
-            i++;
-            count++;
-        }
-
-        while(j<m)
-        {
-            if(count==ind1) ele1=nums2[j];
-            if(count==ind2) ele2=nums2[j];
-            j++;
-            count++;
-        }
-
-        if((n+m)%2==1)
-        {
-            return (double)ele1;
-        }
-        return (double)(ele1+ele2)/2;
+        return 0;
     }
 };
