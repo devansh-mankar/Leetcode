@@ -10,12 +10,11 @@ public:
         while(low<=high)
         {
             int mid=low+(high-low)/2;
-            int ele=matrix[mid/m][mid%m];
-            if(ele==target)
+            if(matrix[mid/m][mid%m]==target)
             {
                 return true;
             }
-            else if(ele>target)
+            else if(matrix[mid/m][mid%m]>target)
             {
                 high=mid-1;
             }
