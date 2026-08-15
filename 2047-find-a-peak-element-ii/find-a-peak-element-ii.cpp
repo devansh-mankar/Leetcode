@@ -1,16 +1,16 @@
 class Solution {
 public:
-    int maxElement(vector<vector<int>>&mat,int col)
+    int findIndex(vector<vector<int>>&mat,int mid)
     {
-        int maxi=-1;
-        int index=-1;
         int n=mat.size();
+        int index=-1;
+        int maxi=-1;
 
         for(int i=0;i<n;i++)
         {
-            if(mat[i][col]>maxi)
+            if(mat[i][mid]>maxi)
             {
-                maxi=mat[i][col];
+                maxi=mat[i][mid];
                 index=i;
             }
         }
@@ -26,16 +26,16 @@ public:
         while(low<=high)
         {
             int mid=low+(high-low)/2;
-            int row=maxElement(mat,mid);
+            int maxRowIndex=findIndex(mat,mid);
 
-            int left= mid-1>=0 ? mat[row][mid-1]: INT_MIN;
-            int right=mid+1<m ? mat[row][mid+1] : INT_MIN;
+            int left=mid-1>=0 ? mat[maxRowIndex][mid-1]:-1;
+            int right=mid+1<m ? mat[maxRowIndex][mid+1]:-1;
 
-            if(mat[row][mid]>left && mat[row][mid]>right)
+            if(mat[maxRowIndex][mid]>left && mat[maxRowIndex][mid]>right)
             {
-                return {row,mid};
+                return {maxRowIndex,mid};
             }
-            else if(left>mat[row][mid])
+            else if(mat[maxRowIndex][mid]<left)
             {
                 high=mid-1;
             }
