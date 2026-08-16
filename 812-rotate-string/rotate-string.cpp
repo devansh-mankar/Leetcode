@@ -6,11 +6,11 @@ public:
             return false;
         }
         s=s+s;
-
-        if(s.find(goal)==std::string::npos)
+        if(s.find(goal)!=std::string::npos)
         {
-            return false;
+            return true;
         }
-        return true;
+        return false;
+        
     }
 };
