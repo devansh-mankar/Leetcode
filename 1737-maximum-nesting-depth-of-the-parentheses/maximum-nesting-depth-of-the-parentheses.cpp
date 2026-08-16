@@ -2,20 +2,21 @@ class Solution {
 public:
     int maxDepth(string s) {
         int n=s.size();
+        stack<char>st;
         int maxi=-1;
-        int count=0;
-        for(auto it:s)
+        for(int i=0;i<n;i++)
         {
-            if(it=='(')
+            if(s[i]=='(')
             {
-                count++;
+                st.push(s[i]);
             }
-            maxi=max(maxi,count);
-            if(it==')')
+            maxi=max(maxi,(int)st.size());
+            if(s[i]==')')
             {
-                count--;
+                st.pop();
             }
         }
         return maxi;
+        
     }
 };
