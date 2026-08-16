@@ -1,21 +1,28 @@
 class Solution {
 public:
     string removeOuterParentheses(string s) {
+        int n=s.size();
+        string ans="";
         int depth=0;
-        string res="";
+
         for(auto it:s)
         {
             if(it=='(')
             {
                 depth++;
-                //now check if it is inner parantheses or not
-                if(depth>1) res+=it;
+                if(depth>1)
+                {
+                    ans+=it;
+                }
+                
+              
             }
             else{
-                if(depth>1) res+=it;
+                if(depth>1)
+                ans+=it;
                 depth--;
             }
         }
-        return res;
+        return ans;
     }
 };
