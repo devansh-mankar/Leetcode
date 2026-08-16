@@ -5,11 +5,12 @@ public:
         {
             return false;
         }
-        string sum=s+s;
-        if(sum.find(goal)!=string::npos)
+        s=s+s;
+
+        if(s.find(goal)==std::string::npos)
         {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 };
