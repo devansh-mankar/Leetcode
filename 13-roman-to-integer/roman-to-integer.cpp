@@ -14,7 +14,7 @@ public:
 
         int ans=0;
 
-        for(int i=0;i<n;i++)
+        for(int i=0;i<n-1;i++)
         {
             if(mp[s[i+1]]>mp[s[i]])
             {
@@ -24,6 +24,7 @@ public:
                 ans+=mp[s[i]];
             }
         }
+        ans+=mp[s[n-1]];
         return ans;
     }
 };
