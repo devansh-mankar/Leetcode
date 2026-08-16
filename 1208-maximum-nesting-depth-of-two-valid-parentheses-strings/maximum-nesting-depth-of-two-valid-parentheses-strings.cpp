@@ -1,6 +1,7 @@
 class Solution {
 public:
     vector<int> maxDepthAfterSplit(string seq) {
+        int n=seq.size();
         int a=0,b=0;
         vector<int>ans;
 
@@ -8,25 +9,25 @@ public:
         {
             if(it=='(')
             {
-                if(a>b)
+                if(a<=b)
                 {
-                b++;
-                ans.push_back(1);
+                    a++;
+                    ans.push_back(0);
                 }
-            else{
-                a++;
-                ans.push_back(0);
+                else{
+                    b++;
+                    ans.push_back(1);
                 }
             }
             else{
-                if(b>a)
+                if(a>b)
                 {
-                    b--;
-                    ans.push_back(1);
-                }
-                else{
                     a--;
                     ans.push_back(0);
+                }
+                else{
+                    b--;
+                    ans.push_back(1);
                 }
             }
         }
