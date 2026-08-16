@@ -1,48 +1,36 @@
 class Solution {
 public:
-    void reverse(string& s,int start,int end)
-    {
-        while(start<end)
-        {
-            swap(s[start++],s[end--]);
-        }
-    }
-    void removeSpaces(string& s)
-    {
-        int i=0,j=0;
+    string reverseWords(string s) {
         int n=s.size();
-        while(i<n && s[i]==' ') i++;
+        vector<string>temp;
+        int i=0;
 
         while(i<n)
         {
-            if(s[i]!=' ')
+            while(i<n && s[i]==' ')
             {
-                s[j++]=s[i++];
+                i++;
             }
-            else{
-                s[j++]=' ';
-                while(i<n && s[i]==' ') i++;
+            string str="";
+            while(i<n && s[i]!=' ')
+            {
+                str+=s[i++];
+            }
+            if(!str.empty())
+            {
+                temp.push_back(str);
             }
         }
 
-        while(j>0 && s[j-1]==' ') j--;
-        s.resize(j);
-    }
-    string reverseWords(string s) {
-        removeSpaces(s);
-
-        int n=s.size();
-        reverse(s,0,n-1);
-
-        int start=0;
-        for(int end=0;end<=n;end++)
+        string ans="";
+        for(int i=temp.size()-1;i>=0;i--)
         {
-            if(end==n || s[end]==' ')
+            ans+=temp[i];
+            if(i!=0)
             {
-                reverse(s,start,end-1);
-                start=end+1;
+                ans+=" ";
             }
         }
-        return s;
+        return ans;
     }
 };
