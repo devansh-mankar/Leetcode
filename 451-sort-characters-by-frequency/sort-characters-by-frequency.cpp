@@ -3,26 +3,25 @@ public:
     string frequencySort(string s) {
         int n=s.size();
 
-        map<char,int>mp;
+        unordered_map<char,int>mp;
+
         for(int i=0;i<n;i++)
         {
             mp[s[i]]++;
         }
 
-        vector<vector<char>>v(s.length()+1);
-
+        vector<pair<int,char>>v;
         for(auto it:mp)
         {
-            v[it.second].push_back(it.first);
+            v.push_back({it.second,it.first});
         }
+        sort(v.rbegin(),v.rend());
 
         string ans="";
-        for(int i=n;i>=1;i--)
+        for(int i=0;i<v.size();i++)
         {
-            for(auto it:v[i])
-            {
-                ans.append(i,it);
-            }
+            string temp(v[i].first,v[i].second);
+            ans+=temp;
         }
         return ans;
     }
