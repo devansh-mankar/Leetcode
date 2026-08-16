@@ -2,12 +2,10 @@ class Solution {
 public:
     bool isPalindrome(string s) {
         int n=s.size();
-
-        int i=0;
         string str="";
-        while(i<n)
+
+        for(int i=0;i<n;i++)
         {
-           
             if(s[i]>='A' && s[i]<='Z')
             {
                 str+=(s[i]+32);
@@ -16,19 +14,16 @@ public:
             {
                 str+=s[i];
             }
-            i++;
         }
 
-         i=0;
+        int i=0;
         int j=str.size()-1;
-
         while(i<=j)
         {
             if(str[i++]!=str[j--])
             {
                 return false;
             }
-            
         }
         return true;
     }
