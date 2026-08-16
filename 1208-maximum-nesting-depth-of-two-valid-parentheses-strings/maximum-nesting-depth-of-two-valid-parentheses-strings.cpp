@@ -3,7 +3,6 @@ public:
     vector<int> maxDepthAfterSplit(string seq) {
         vector<int>ans;
         int a=0,b=0;
-
         for(auto it:seq)
         {
             if(it=='(')
@@ -18,15 +17,13 @@ public:
                     ans.push_back(1);
                 }
             }
-            else
-            {
+            else{
                 if(a>b)
                 {
                     a--;
                     ans.push_back(0);
                 }
-                else
-                {
+                else{
                     b--;
                     ans.push_back(1);
                 }
