@@ -2,26 +2,27 @@ class Solution {
 public:
     string frequencySort(string s) {
         int n=s.size();
-        unordered_map<char,int>mp;
 
+        unordered_map<char,int>mp;
         for(int i=0;i<n;i++)
         {
             mp[s[i]]++;
         }
 
-        vector<vector<char>>v(n+1);
+        vector<pair<int,char>>v;
+
         for(auto it:mp)
         {
-            v[it.second].push_back(it.first);
+            v.push_back({it.second,it.first});
         }
+        sort(v.rbegin(),v.rend());
 
         string ans="";
-        for(int fq=n;fq>=1;fq--)
+
+        for(int i=0;i<v.size();i++)
         {
-            for(auto ch:v[fq])
-            {
-                ans.append(fq,ch);
-            }
+            string temp(v[i].first,v[i].second);
+            ans+=temp;
         }
         return ans;
     }
