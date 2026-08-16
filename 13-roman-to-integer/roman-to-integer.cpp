@@ -1,8 +1,9 @@
 class Solution {
 public:
     int romanToInt(string s) {
-        map<char,int>mp;
+        int n=s.size();
 
+        map<char,int>mp;
         mp['I']=1;
         mp['V']=5;
         mp['X']=10;
@@ -10,16 +11,16 @@ public:
         mp['C']=100;
         mp['D']=500;
         mp['M']=1000;
+
         int ans=0;
 
-        for(int i=0;i<s.length();i++)
+        for(int i=0;i<n;i++)
         {
-            if(mp[s[i]]<mp[s[i+1]])
+            if(mp[s[i+1]]>mp[s[i]])
             {
-                ans=ans-mp[s[i]];
+                ans-=mp[s[i]];
             }
-            else
-            {
+            else{
                 ans+=mp[s[i]];
             }
         }
