@@ -1,22 +1,35 @@
 class Solution {
 public:
     vector<int> maxDepthAfterSplit(string seq) {
-        int n=seq.size();
-        int open=0;
+        int a=0,b=0;
+        vector<int>ans;
 
-        vector<int>v(n);
-        for(int i=0;i<n;i++)
+        for(auto it:seq)
         {
-            if(seq[i]=='(')
+            if(it=='(')
             {
-                v[i]=open&1;
-                open++;
+                if(a>b)
+                {
+                b++;
+                ans.push_back(1);
+                }
+            else{
+                a++;
+                ans.push_back(0);
+                }
             }
             else{
-                open--;
-                v[i]=open&1;
+                if(b>a)
+                {
+                    b--;
+                    ans.push_back(1);
+                }
+                else{
+                    a--;
+                    ans.push_back(0);
+                }
             }
         }
-        return v;
+        return ans;
     }
 };
