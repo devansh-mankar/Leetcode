@@ -11,26 +11,23 @@
 class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
-        if(!head || !head->next)
-        {
-            return head;
-        }
+        if(!head || !head->next) return head;
+
         ListNode* first=head;
+
         while(first)
         {
-            ListNode* second=head;
-            while(first!=second)
+            ListNode* temp=head;
+            while(temp)
             {
-                if(second->val>first->val)
+                if(temp->val>first->val)
                 {
-                    swap(second->val,first->val);
+                    swap(temp->val,first->val);
                 }
-                second=second->next;
+                temp=temp->next;
             }
             first=first->next;
         }
         return head;
-
-
     }
 };
