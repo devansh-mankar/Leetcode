@@ -14,7 +14,6 @@ public:
         if(!head || !head->next) return head;
 
         ListNode* first=head;
-
         while(first)
         {
             ListNode* temp=head;
