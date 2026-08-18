@@ -11,47 +11,39 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        if(!list1)
-        {
-            return list2;
-        }
-        if(!list2)
-        {
-            return list1;
-        }
+        if(!list1) return list2;
 
-        ListNode* dummy=new ListNode(0);
-        ListNode* ans=dummy;
-
-        while(list1 && list2)
-        {
-            if(list1->val<=list2->val)
-            {
-                dummy->next=list1;
-                list1=list1->next;
-                dummy=dummy->next;
-            }
-            else{
-                dummy->next=list2;
-                dummy=dummy->next;
-                list2=list2->next;
-            }
-        }
+        if(!list2) return list1;
+        vector<int>v;
 
         while(list1)
         {
-            dummy->next=list1;
-            dummy=dummy->next;
+            v.push_back(list1->val);
             list1=list1->next;
         }
 
         while(list2)
         {
-            dummy->next=list2;
-            dummy=dummy->next;
+            v.push_back(list2->val);
             list2=list2->next;
         }
+        sort(v.begin(),v.end());
+        ListNode* head=NULL;
+        ListNode* tail=NULL;
 
-        return ans->next;
+       for(int i=0;i<v.size();i++)
+       {
+            ListNode* newNode=new ListNode(v[i]);
+            if(head==NULL)
+            {
+                head=newNode;
+                tail=newNode;
+            }
+            else{
+                tail->next=newNode;
+                tail=newNode;
+            }
+       }
+       return head;
     }
 };
