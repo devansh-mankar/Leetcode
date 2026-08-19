@@ -10,21 +10,9 @@
  */
 class Solution {
 public:
-    ListNode* find(ListNode* temp,int k)
-    {
-        //starting from 1st node so decrement k
-        k=k-1;
-        while(k>0 && temp!=NULL)
-        {
-            k--;
-            temp=temp->next;
-        }
-        return temp;
-    }
-    ListNode* reverseLL(ListNode* head)
-    {
-        ListNode* curr=head;
+    ListNode* Reverse(ListNode* head){
         ListNode* prev=NULL;
+        ListNode* curr=head;
         ListNode* forward=NULL;
 
         while(curr)
@@ -36,44 +24,51 @@ public:
         }
         return prev;
     }
-    ListNode* reverseKGroup(ListNode* head, int k) {
-        ListNode* temp=head;
-        ListNode* prevNode=NULL;
-        ListNode* nextNode=NULL;
-
-        while(temp)
+    ListNode* findK(ListNode* temp,int k)
+    {
+        k--; 
+        while(k>0 && temp)
         {
-            //get the kth Node
-            ListNode* kthNode=find(temp,k);
-            //if the kth node is null
-            if(kthNode==NULL)
+            k--;
+            temp=temp->next;
+        }
+        return temp;
+    }
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(!head)
+        {
+            return NULL;
+        }
+
+        ListNode* prevLast=NULL;
+        ListNode* nextNode=NULL;
+        ListNode* temp=head;
+
+        while(temp){
+            ListNode* kth=findK(temp,k);
+
+            if(kth==NULL)
             {
-                //if previous group exists connect it
-                if(prevNode)
+                if(prevLast)
                 {
-                    prevNode->next=temp;
+                    prevLast->next=temp;
                 }
                 break;
             }
-            //store the next part after getting kth node so that we don't loose the track of linked list
-            nextNode=kthNode->next;
-            kthNode->next=NULL;
-            //now reverse kth part
-            reverseLL(temp);
+
+            nextNode=kth->next;
+            kth->next=NULL;
+            Reverse(temp);
 
             if(temp==head)
             {
-                //adjusting the head after reversal
-                head=kthNode;
+                head=kth;
             }
-            else
-            {
-                //linking the last group of nodes to the reversed group
-                prevNode->next=kthNode;
+            else{
+                prevLast->next=kth;
             }
-            prevNode=temp;
+            prevLast=temp;
             temp=nextNode;
-
         }
         return head;
     }
