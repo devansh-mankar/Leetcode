@@ -21,9 +21,9 @@ public:
             temp=temp->next;
         }
 
+        temp->next=head;
         k=k%len;
         int end=len-k;
-        temp->next=head;
 
         while(end--)
         {
@@ -31,7 +31,6 @@ public:
         }
         head=temp->next;
         temp->next=NULL;
-
         return head;
     }
 };
