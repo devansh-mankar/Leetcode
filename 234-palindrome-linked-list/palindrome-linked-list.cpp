@@ -12,23 +12,23 @@ class Solution {
 public:
     bool isPalindrome(ListNode* head) {
         if(!head || !head->next) return true;
+        stack<int>st;
 
-        vector<int>v;
         ListNode* temp=head;
         while(temp)
         {
-            v.push_back(temp->val);
+            st.push(temp->val);
             temp=temp->next;
         }
-
-        int i=0;
-        int j=v.size()-1;
-        while(i<=j)
+        temp=head;
+        while(!st.empty())
         {
-            if(v[i++]!=v[j--])
+            if(st.top()!=temp->val)
             {
                 return false;
             }
+            st.pop();
+            temp=temp->next;
         }
         return true;
     }
