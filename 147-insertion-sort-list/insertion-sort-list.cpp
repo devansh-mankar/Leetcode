@@ -11,17 +11,20 @@
 class Solution {
 public:
     ListNode* insertionSortList(ListNode* head) {
-        if(!head || !head->next) return head;
+        if(!head || !head->next)
+        {
+            return head;
+        }
 
         ListNode* first=head;
         while(first)
         {
-            ListNode* temp=head;
+            ListNode* temp=first->next;
             while(temp)
             {
-                if(temp->val>first->val)
+                if(first->val>temp->val)
                 {
-                    swap(temp->val,first->val);
+                    swap(first->val,temp->val);
                 }
                 temp=temp->next;
             }
