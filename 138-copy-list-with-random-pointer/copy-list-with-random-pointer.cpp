@@ -19,7 +19,7 @@ public:
     Node* copyRandomList(Node* head) {
 
         if(!head) return NULL;
-        map<Node*,Node*>mp;
+        unordered_map<Node*,Node*>mp;
 
         Node* temp=head;
 
