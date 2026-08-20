@@ -19,7 +19,7 @@ public:
 
         while(headB)
         {
-            if(mp.find(headB)!=mp.end())
+            if(mp[headB])
             {
                 return headB;
             }
