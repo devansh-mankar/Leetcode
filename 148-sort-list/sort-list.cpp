@@ -11,8 +11,9 @@
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
-        vector<int>v;
+        if(!head || !head->next) return head;
 
+        vector<int>v;
         ListNode* temp=head;
         while(temp)
         {
@@ -23,9 +24,10 @@ public:
         sort(v.begin(),v.end());
 
         temp=head;
-        for(int i=0;i<v.size();i++)
+        int i=0;
+        while(i<v.size())
         {
-            temp->val=v[i];
+            temp->val=v[i++];
             temp=temp->next;
         }
         return head;
