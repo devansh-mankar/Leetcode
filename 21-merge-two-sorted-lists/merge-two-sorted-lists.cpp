@@ -14,38 +14,37 @@ public:
         if(!list1) return list2;
         if(!list2) return list1;
 
-        ListNode* temp=new ListNode(0);
-        ListNode* ans=temp;
-
-        while(list1 && list2)
-        {
-            if(list1->val<=list2->val)
-            {
-                temp->next=list1;
-                temp=temp->next;
-                list1=list1->next;
-            }
-            else{
-                temp->next=list2;
-                temp=temp->next;
-                list2=list2->next;
-            }
-        }
-
+        vector<int>v;
         while(list1)
         {
-            temp->next=list1;
+            v.push_back(list1->val);
             list1=list1->next;
-            temp=temp->next;
         }
 
         while(list2)
         {
-            temp->next=list2;
+            v.push_back(list2->val);
             list2=list2->next;
-            temp=temp->next;
         }
 
-        return ans->next;
+        sort(v.begin(),v.end());
+
+        ListNode* head=NULL;
+        ListNode* tail=NULL;
+
+        for(int i=0;i<v.size();i++)
+        {
+            ListNode* newNode=new ListNode(v[i]);
+            if(head==NULL)
+            {
+                head=newNode;
+                tail=newNode;
+            }
+            else{
+                tail->next=newNode;
+                tail=newNode;
+            }
+        }
+        return head;
     }
 };
