@@ -49,8 +49,8 @@ public:
     {
         Node dummy(0);
         Node* ans=&dummy;
-        Node* temp=head;
 
+        Node* temp=head;
         while(temp)
         {
             ans->next=temp->next;
@@ -59,7 +59,6 @@ public:
             temp->next=temp->next->next;
             temp=temp->next;
         }
-        
         return dummy.next;
     }
     Node* copyRandomList(Node* head) {
