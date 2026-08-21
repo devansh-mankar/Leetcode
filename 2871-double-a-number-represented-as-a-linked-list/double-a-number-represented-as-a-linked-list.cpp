@@ -10,54 +10,33 @@
  */
 class Solution {
 public:
-    ListNode* Reverse(ListNode* head)
-    {
-        ListNode* prev=NULL;
-        ListNode* curr=head;
-        ListNode* forward=NULL;
-
-        while(curr)
-        {
-            forward=curr->next;
-            curr->next=prev;
-            prev=curr;
-            curr=forward;
-        }
-        return prev;
-    }
     ListNode* doubleIt(ListNode* head) {
-        if(!head)
-        {
-            return NULL;
-        }
-        head=Reverse(head);
+        if(!head) return NULL;
 
-        int carry=0;
         ListNode* temp=head;
-        ListNode* last=NULL;
+        ListNode* prev=NULL;
+
         while(temp)
         {
-            int value=temp->val*2+carry;
-            temp->val=value%10;
+            int value=temp->val*2;
             if(value<10)
             {
-                carry=0;
+                temp->val=value;
+            }
+            else if(prev!=NULL)
+            {
+                temp->val=value%10;
+                prev->val+=1;
             }
             else{
-                carry=1;
+                ListNode* newNode=new ListNode(1);
+                newNode->next=head;
+                head=newNode;
+                temp->val=value%10;
             }
-            last=temp;
+            prev=temp;
             temp=temp->next;
         }
-
-
-        if(carry!=0)
-        {
-            ListNode* newNode=new ListNode(carry);
-            last->next=newNode;
-        }
-
-        head=Reverse(head);
         return head;
     }
 };
