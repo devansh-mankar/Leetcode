@@ -10,17 +10,16 @@
  */
 class Solution {
 public:
-    ListNode* findK(ListNode* temp,int k)
+    ListNode* findK(ListNode* head,int k)
     {
         k--;
-        while(k>0 && temp)
+        while(k>0 && head)
         {
             k--;
-            temp=temp->next;
+            head=head->next;
         }
-        return temp;
+        return head;
     }
-
     ListNode* Reverse(ListNode* head)
     {
         ListNode* prev=NULL;
@@ -37,19 +36,14 @@ public:
         return prev;
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        if(!head)
-        {
-            return NULL;
-        }
+        if(!head || k==1) return head;
 
-        ListNode* prevLast=NULL;
         ListNode* temp=head;
+        ListNode* prevLast=NULL;
         ListNode* nextNode=NULL;
-
         while(temp)
         {
             ListNode* kth=findK(temp,k);
-
             if(kth==NULL)
             {
                 if(prevLast)
@@ -58,10 +52,8 @@ public:
                 }
                 break;
             }
-
             nextNode=kth->next;
             kth->next=NULL;
-
             Reverse(temp);
             if(temp==head)
             {
@@ -70,9 +62,8 @@ public:
             else{
                 prevLast->next=kth;
             }
-
             prevLast=temp;
-            temp=nextNode;
+            temp=nextNode;  
         }
         return head;
     }
