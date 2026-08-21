@@ -48,24 +48,23 @@ public:
     Node* deepCopy(Node* head)
     {
         Node dummy(0);
-        Node* res=&dummy;
-
+        Node* ans=&dummy;
         Node* temp=head;
+
         while(temp)
         {
-            res->next=temp->next;
-            res=res->next;
+            ans->next=temp->next;
+            ans=ans->next;
 
             temp->next=temp->next->next;
             temp=temp->next;
         }
+        
         return dummy.next;
     }
     Node* copyRandomList(Node* head) {
-        if(!head)
-        {
-            return NULL;
-        }
+        if(!head) return NULL;
+
         insertCopy(head);
         copyRandom(head);
         return deepCopy(head);
