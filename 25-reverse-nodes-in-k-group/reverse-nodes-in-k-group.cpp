@@ -10,15 +10,15 @@
  */
 class Solution {
 public:
-    ListNode* findK(ListNode* head,int k)
+    ListNode* findK(ListNode* temp,int k)
     {
         k--;
-        while(k>0 && head)
+        while(k>0 && temp)
         {
             k--;
-            head=head->next;
+            temp=temp->next;
         }
-        return head;
+        return temp;
     }
     ListNode* Reverse(ListNode* head)
     {
@@ -41,10 +41,11 @@ public:
         ListNode* temp=head;
         ListNode* prevLast=NULL;
         ListNode* nextNode=NULL;
+
         while(temp)
         {
             ListNode* kth=findK(temp,k);
-            if(kth==NULL)
+            if(!kth)
             {
                 if(prevLast)
                 {
@@ -55,6 +56,7 @@ public:
             nextNode=kth->next;
             kth->next=NULL;
             Reverse(temp);
+
             if(temp==head)
             {
                 head=kth;
@@ -63,7 +65,7 @@ public:
                 prevLast->next=kth;
             }
             prevLast=temp;
-            temp=nextNode;  
+            temp=nextNode;
         }
         return head;
     }
