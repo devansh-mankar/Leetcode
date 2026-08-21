@@ -10,24 +10,52 @@
  */
 class Solution {
 public:
-    int solve(ListNode* head)
+    ListNode* Reverse(ListNode* head)
     {
-        if(!head) return 0;
-       
-        int value=2*head->val+solve(head->next);
+        ListNode* prev=NULL;
+        ListNode* curr=head;
+        ListNode* forward=NULL;
 
-        head->val=value%10;
-        return value/10;
+        while(curr)
+        {
+            forward=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=forward;
+        }
+        return prev;
     }
     ListNode* doubleIt(ListNode* head) {
-        int carry=solve(head);
+        if(!head) return NULL;
 
-        if(carry)
+        head=Reverse(head);
+
+        int carry=0;
+        ListNode* temp=head;
+        while(temp)
         {
-            ListNode* newNode=new ListNode(1);
-            newNode->next=head;
-            head=newNode;
+            int value=temp->val*2+carry;
+            temp->val=value%10;
+            if(value<10)
+            {
+                carry=0;
+            }
+            else{  
+                carry=1;
+            }
+            temp=temp->next;
         }
+
+
+        if(carry!=0)
+        {
+            head=Reverse(head);
+            ListNode* newNode=new ListNode(carry);
+            newNode->next=head;
+            return newNode;
+        }
+
+        head=Reverse(head);
         return head;
     }
 };
