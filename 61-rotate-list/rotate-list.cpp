@@ -23,7 +23,7 @@ public:
         temp->next=head;
         k=k%count;
         int end=count-k;
-        
+
         while(end--)
         {
             temp=temp->next;
@@ -31,6 +31,5 @@ public:
         head=temp->next;
         temp->next=NULL;
         return head;
-        
     }
 };
