@@ -2,25 +2,26 @@ class Solution {
 public:
     bool sumGame(string num) {
         int n=num.size();
+        int cnt1=0;
+        int cnt2=0;
+        int sum=0;
 
-        int lsum=0;
-        int rsum=0;
-
-        int leftQ=0;
-        int rightQ=0;
-
-        for(int i=0;i<n/2;i++)
+        for(int i=0;i<n;i++)
         {
-            if(num[i]=='?') leftQ++;
-            else lsum+=(num[i]-'0');
+            if(i<n/2)
+            {
+                if(num[i]=='?') cnt1++;
+                else sum+=num[i]-'0';
+            }
+            else{
+                if(num[i]=='?') cnt2++;
+                else sum-=num[i]-'0';
+            }
         }
 
-        for(int i=n/2;i<n;i++)
-        {
-            if(num[i]=='?') rightQ++;
-            else rsum+=(num[i]-'0');
-        }
+        if((cnt1+cnt2)%2) return true;
 
-        return ((lsum-rsum)*2)!=(rightQ-leftQ)*9;
+        int ans=(sum)+(cnt1/2)*9-(cnt2/2)*9;
+        return ans!=0;
     }
 };
