@@ -9,7 +9,6 @@ public:
        
         if(s[index]>='0' && s[index]<='9')
         {
-
              if((res*10+(s[index]-'0'))>INT_MAX)
             {
                 return sign ? INT_MIN:INT_MAX;
