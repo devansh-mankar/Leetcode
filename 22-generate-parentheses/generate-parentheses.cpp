@@ -1,34 +1,21 @@
 class Solution {
 public:
-    bool isValid(string& s)
-    {
-        int count=0;
-
-        for(auto c:s)
-        {
-            if(c=='(') count++;
-            if(c==')') count--;
-            if(count<0) return 0;
-        }
-        return count==0;
-    }
-    void solve(int n,string curr,vector<string>&res)
+    void solve(int n,int open,int close,string curr,vector<string>& res)
     {
         if(n*2==curr.size())
         {
-            if(isValid(curr))
-            {
-                res.push_back(curr);
-            }
+            res.push_back(curr);
             return;
         }
-        solve(n,curr+'(',res);
-        solve(n,curr+')',res);
+        if(open<n) solve(n,open+1,close,curr+'(',res);
+        if(close<open) solve(n,open,close+1,curr+')',res);
     }
     vector<string> generateParenthesis(int n) {
         vector<string>res;
+        int open=0;
+        int close=0;
         string curr="";
-        solve(n,curr,res);
+        solve(n,open,close,curr,res);
         return res;
     }
 };
