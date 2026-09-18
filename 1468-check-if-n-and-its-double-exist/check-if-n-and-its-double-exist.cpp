@@ -4,9 +4,6 @@ public:
         int n=arr.size();
 
         map<int,int>mp;
-
-        
-
         for(auto it:arr)
         {
             if(mp[it*2] || (it%2==0 && mp[it/2])) return true;
