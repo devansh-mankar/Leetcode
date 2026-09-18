@@ -1,21 +1,40 @@
 class Solution {
 public:
-    void solve(int n,int open,int close,string curr,vector<string>& res)
+    bool isValid(string& s)
     {
-        if(n*2==curr.size())
+        int count=0;
+        for(auto c:s)
         {
-            res.push_back(curr);
+            if(c=='(')
+            {
+                count++;
+            }
+            if(c==')')
+            {
+                count--;
+            }
+            if(count<0) return 0;
+        }
+        return count==0;
+    }
+    void solve(int index,int n,string curr,vector<string>&res)
+    {
+        if(index==2*n)
+        {
+            if(isValid(curr))
+            {
+                res.push_back(curr);
+            }
             return;
         }
-        if(open<n) solve(n,open+1,close,curr+'(',res);
-        if(close<open) solve(n,open,close+1,curr+')',res);
+        
+        solve(index+1,n,curr+'(',res);
+        solve(index+1,n,curr+')',res);
     }
     vector<string> generateParenthesis(int n) {
         vector<string>res;
-        int open=0;
-        int close=0;
         string curr="";
-        solve(n,open,close,curr,res);
+        solve(0,n,curr,res);
         return res;
     }
 };
