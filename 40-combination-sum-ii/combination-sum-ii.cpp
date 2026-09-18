@@ -7,7 +7,7 @@ public:
             ans.push_back(temp);
             return;
         }
-        if(target<0) return;
+        if(index==n || nums[index]>target) return;
 
         for(int i=index;i<n;i++)
         {
