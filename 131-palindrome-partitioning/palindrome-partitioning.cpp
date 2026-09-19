@@ -18,7 +18,6 @@ public:
             ans.push_back(temp);
             return;
         }
-
         for(int i=index;i<n;i++)
         {
             if(valid(s,index,i))
